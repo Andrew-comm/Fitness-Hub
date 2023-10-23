@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    <div class="login-card">
+        <div class="card">
+            <div class="cone">
+                <h3 class="card-title">Welcome to GymGenius</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" class="my-form">
+                    {% csrf_token %}
+                    {% if error %}
+                        <p class="error">{{ error }}</p>
+                    {% endif %}
+                    <label for="email" class="label">Email:</label>
+                    <input type="text" id="email" name="email" class="input"> <!-- Updated name and added class -->
+                    <label for="password" class="label">Password:</label>
+                    <input type="password" id="password" name="password" class="input"> <!-- Added class -->
+                    <button type="submit" class="login-button">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>

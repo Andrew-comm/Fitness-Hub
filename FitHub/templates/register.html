@@ -1,0 +1,19 @@
+{% load static %}
+
+<html>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <div class="register-card">
+        <div class="card">
+            <div class="cone">
+                <h3 class="card-title">Welcome to GymGenius</h3> <!-- Title inside the cone -->
+            </div>
+            <div class="card-body">
+                <form method="post" class="my-form">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</html>
