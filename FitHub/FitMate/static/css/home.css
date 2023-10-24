@@ -82,19 +82,21 @@
 
 /* Card container styling */
 .register-card{
-  background-image: url('../images/hero-bg.jpg'); 
+  background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
   background-size: cover;
   background-position: center;
+  background-attachment: fixed; /* Optional: Fixes the background image in place */
   width: 100vw;
   height: 100vh;
-  background-attachment: fixed; 
+  position: fixed;
+ 
+  left: 0;
 }
 
 
-.card {
-  margin-top: 10px;
-  width: 500px; 
-  margin: 0 auto;
+.card { 
+  width: 400px; 
+  margin: 20px auto;
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -116,18 +118,18 @@
 .card-title {
   text-align: center;
   color: #fff; /* White color for the title inside the cone */
-  font-size: 24px; /* Adjust the font size as needed */
-  margin: 0;
+  font-size: 18px; /* Increase the font size for better visibility */
   font-weight: bold;
+  position: relative; /* Set the title as a relative position */
+  top: 35px; /* Adjust the vertical position to fit it inside the cone */
 }
+
 /* Cone shape styling */
 .cone {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 0;
-  height: 0;
+  justify-content: center; 
   border-left: 75px solid transparent;
   border-right: 75px solid transparent;
   border-bottom: 30px solid #3516e6; /* Pink color for the cone */
@@ -164,13 +166,13 @@
   background-color: #0056b3; /* Button color on hover */
 }
 .login-card {
-  background-image: url('../images/hero-bg.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
+  background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Optional: Fixes the background image in place */
   width: 100vw;
   height: 100vh;
   position: fixed;
-  top: 0;
+  
   left: 0;
 }
