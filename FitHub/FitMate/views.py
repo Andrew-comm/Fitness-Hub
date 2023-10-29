@@ -16,22 +16,20 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
+
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST['email']  # Use 'email' instead of 'username'
+        email = request.POST['email']
         password = request.POST['password']
-
-        # Create a user variable to store the user object
-        user = None
+        print(f"Email: {email}, Password: {password}") 
 
         # Authenticate using email
-        if email and password:
-            user = authenticate(request, email=email, password=password)
+        user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            return redirect('home')  # Redirect to the 'home' view or URL name
         else:
             # Handle authentication failure
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
+            return redirect('home')
     return render(request, 'login.html')
