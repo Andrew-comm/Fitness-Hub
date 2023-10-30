@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.contrib.auth import get_user_model
+from PIL import Image 
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -37,3 +39,35 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+
+#profile
+
+User = get_user_model()
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name= models.CharField(max_length=50)     
+    bio = models.TextField(blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    fitness_level = models.CharField(
+        max_length=20,
+        choices=[
+            ('Beginner', 'Beginner'),
+            ('Intermediate', 'Intermediate'),
+            ('Advanced', 'Advanced'),
+        ],
+        blank=True
+    )
+
+    # Fitness goals and preferences
+    fitness_goals = models.TextField(blank=True)
+    workout_preferences = models.TextField(blank=True)
+    nutritional_preferences = models.TextField(blank=True)
+
+
+
+    def __str__(self):
+        return self.user.email
+
+    

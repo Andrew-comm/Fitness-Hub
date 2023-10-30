@@ -1,5 +1,6 @@
 from django import forms
 from .models import CustomUser
+from .models import UserProfile
 
 class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -16,3 +17,9 @@ class CustomUserCreationForm(forms.ModelForm):
         password2 = cleaned_data.get('password2')
         if password1 != password2:
             raise forms.ValidationError('Passwords do not match.')
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model=UserProfile
+        fields='__all__'
