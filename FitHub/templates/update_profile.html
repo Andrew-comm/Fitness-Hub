@@ -1,0 +1,129 @@
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <style>
+        body {
+            background-image: url("{% static 'images/gym.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps the background image fixed */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 500px; /* Adjust as needed */
+        }
+        .card{
+            background-color: rgb(240, 87, 112);
+        }
+
+        .card-body {
+            overflow: auto; /* Adds a scroll bar to the card body if contents exceed the card's height */
+            max-height: 500px; /* Maximum height for the card body before scrolling appears */
+        }
+
+         /* Style labels */
+        .form-group label {
+            font-weight: bold;
+        }
+
+        /* Style the button */
+        .btn-primary {
+            background-color: #007BFF;
+            border-color: #007BFF;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Custom styling for form */
+        /* Add spacing between form fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Style form inputs */
+        input.form-control {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        /* Style select inputs */
+        select.form-select {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        /* Style textareas */
+        textarea.form-control {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="card">
+            <h3 class="card-title text-primary text-center">Update Your Profile</h3>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}">Name</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.bio.id_for_label }}">Bio</label>
+                        {{ form.bio }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.profile_picture.id_for_label }}">Profile picture</label>
+                        {{ form.profile_picture }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.fitness_level.id_for_label }}">Fitness level</label>
+                        {{ form.fitness_level }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.fitness_goals.id_for_label }}">Fitness goals</label>
+                        {{ form.fitness_goals }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.workout_preferences.id_for_label }}">Workout preferences</label>
+                        {{ form.workout_preferences }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.nutritional_preferences.id_for_label }}">Nutritional preferences</label>
+                        {{ form.nutritional_preferences }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -8,8 +8,18 @@ from .forms import UserProfileForm
 
 
 def home(request):
-    profile = UserProfile.objects.get(user=request.user)    
+    profile = UserProfile.objects.all()  
+    if request.user.is_authenticated:          
+        profile = UserProfile.objects.get(user=request.user)    
     return render(request, 'home.html',{'profile':profile})
+
+#view profile
+User = get_user_model()
+
+def view_profile(request, pk):
+    user = User.objects.get(pk=pk)
+    profile = user.userprofile
+    return render(request, 'profile.html', {'user': user, 'profile': profile})
 
 #create profile
 @login_required
@@ -27,8 +37,8 @@ def create_profile(request):
 
 
 #update profile
-@login_required
-def update_profile(request):
+
+def update_profile(request, pk):
     try:
         profile = request.user.userprofile
     except UserProfile.DoesNotExist:
@@ -38,20 +48,14 @@ def update_profile(request):
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             profile = form.save()
-            return redirect('view_profile', username=request.user.username)
+            return redirect('profile', pk=pk)
     else:
         form = UserProfileForm(instance=profile)
     return render(request, 'update_profile.html', {'form': form})
 
-#view profile
-User = get_user_model()
 
-def view_profile(request, pk):
-    user = User.objects.get(pk=pk)
-    profile = user.userprofile
-    return render(request, 'profile.html', {'user': user, 'profile': profile})
 #delete profile
-@login_required
+
 def delete_profile(request):
     if request.method == 'POST':
         profile = request.user.userprofile

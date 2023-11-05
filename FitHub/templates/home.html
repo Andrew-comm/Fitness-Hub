@@ -62,6 +62,7 @@
                     <h2 data-aos="fade-up" data-aos-delay="100">Welcome {{user}} to a Healthier You - Your Journey Starts Here!</h2>
                     <p> At our gym, we are not just about fitness; we are dedicated to transforming lives. Our passionate team of fitness experts is here to guide and support you on your path to a healthier, stronger you. From personalized workout plans to expert nutrition advice, we are committed to helping you reach your fitness goals. Join us and embark on a journey to a healthier and happier version of yourself.</p>
                 </div>
+                {% if not request.user.is_authenticated %}
                 <div class="col-lg-5 content">
                   <form class="sign-up-login-form d-flex" data-aos="fade-up" data-aos-delay="300">
                     <a href="{% url 'register' %}">
@@ -73,6 +74,7 @@
                 </form>
                 
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>

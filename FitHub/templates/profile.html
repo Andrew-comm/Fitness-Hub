@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <html>
 
 <head>
@@ -14,43 +15,39 @@
 </head>
 
 <body style="background-image: url('{% static "images/gym.jpg" %}'); background-size: cover; background-position: center; margin: 0; padding: 0; height: 100vh; overflow: hidden;">
-  {% block content %}
-<div class="container">
-  <h1 class="ml-6" text-center>{{ profile.name }}</h1>
-  <div class="card">
-      <div class="card-body">
-          <div class="row">
-              <div class="col-md-6 mt-0">                  
-                  <p class="card-title">Email: {{ profile.user.email }}</p>
-                  <p class="card-text mt-5">Bio: {{ profile.bio }}</p>
-                  <p class="card-text">Fitness Level: {{ profile.fitness_level }}</p>
-              </div>
-              <div class="col-md-6">
-                  <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mr-9" style="max-width: 150px; max-height: 150px;">
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 mt-3">
-                  <h3>Fitness Goals</h3>
-                  <p>{{ profile.fitness_goals }}</p>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 mt-3">
-                  <h3>Workout Preferences</h3>
-                  <p>{{ profile.workout_preferences }}</p>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-md-12 mt-3">
-                  <h3>Nutritional Preferences</h3>
-                  <p>{{ profile.nutritional_preferences }}</p>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+    {% block content %}
+    <div class="card">
+        <h3 class="card-title text-primary">{{ profile.name }}</h3>
+        <div class="card-header">
+
+            <img src="{{ profile.profile_picture.url }}" class="rounded-circle float-right" alt="Profile Picture" style="max-width: 100px;">
+        </div>
+        <div class="card-body">
+            <p class="card-text mt-2">Bio: {{ profile.bio }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h5>Fitness Goals</h5>
+                {{ profile.fitness_goals }}
+            </li>
+            <li class="list-group-item">
+                <h5>Workout Preferences</h5>
+                {{ profile.workout_preferences }}
+            </li>
+            <li class="list-group-item">
+                <h5>Nutritional Preferences</h5>
+                {{ profile.nutritional_preferences }}
+            </li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'update-profile' user.id %}" class="card-link">UPDATE</a>
+            <a href="#" class="card-link">DELETE</a>
+        </div>
+    </div>
+    
+
 {% endblock %}
+
 
 </body>
 
