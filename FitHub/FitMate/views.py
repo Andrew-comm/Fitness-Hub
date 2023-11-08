@@ -77,24 +77,21 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
 def login_view(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        print(f"Email: {email}, Password: {password}") 
 
-        # Authenticate using email
+        # Authenticate using email and password
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
             return redirect('home')  # Redirect to the 'home' view or URL name
         else:
-            # Handle authentication failure
-            return redirect('home')
+            # Handle authentication failure, you can provide an error message or return to the login page
+            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
     return render(request, 'login.html')
-
 
 def logout_view(request):
     logout(request)  # This logs out the user
