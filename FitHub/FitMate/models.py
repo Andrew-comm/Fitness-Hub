@@ -70,4 +70,10 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.email
 
-    
+class Gallery(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    gallery_pic = models.ImageField(upload_to='profile_pictures/')
+
+    def __str__(self):
+        return self.name
