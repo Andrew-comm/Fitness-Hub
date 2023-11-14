@@ -1,0 +1,178 @@
+/* Update the CSS to overlay the content on the image */
+/* Remove the unnecessary CSS variables and button styles */
+/* Keep the default Bootstrap button styles */
+
+/* Corrected CSS for the hero image and overlay */
+.hero {
+  position: relative;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Set the height as needed to cover the entire viewport */
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Updated CSS for the hero content and buttons */
+.hero-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Style the title and paragraph */
+.hero-content .content h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero-content .content p {
+  color: #f5f5f5;
+}
+
+/* Style the form buttons using Bootstrap classes */
+.hero-content .sign-up-login-form {
+  display: flex;
+  align-items: center;
+}
+
+.hero-content .sign-up-login-form button {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* Apply the Bootstrap button classes to the buttons */
+.hero-content .sign-up-login-form .btn-primary {
+  /* This will use Bootstrap's primary button color */
+  /* Example: Red for "Sign Up" */
+  color: white;
+}
+
+.hero-content .sign-up-login-form .btn-secondary {
+  /* This will use Bootstrap's secondary button color */
+  /* Example: Gray for "Login" */
+  color: white;
+}
+
+/* Add hover effect to the buttons if desired */
+.hero-content .sign-up-login-form button:hover {
+  opacity: 0.8;
+}
+
+
+
+
+/* Card container styling */
+.register-card{
+  background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Optional: Fixes the background image in place */
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+ 
+  left: 0;
+}
+
+
+.card { 
+  width: 400px; 
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  transition: transform 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(to right, #FF1493, #FF69B4); /* Background gradient */
+}
+
+/* Add hover effect for the card */
+.card:hover {
+  transform: scale(1.05);
+}
+.card-title {
+  text-align: center;
+  color: #fff; /* White color for the title inside the cone */
+  font-size: 18px; /* Increase the font size for better visibility */
+  font-weight: bold;
+  position: relative; /* Set the title as a relative position */
+  top: 35px; /* Adjust the vertical position to fit it inside the cone */
+}
+
+/* Cone shape styling */
+.cone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-bottom: 30px solid #3516e6; /* Pink color for the cone */
+  z-index: 1; /* Place it above the card */
+  margin-bottom: 20px;
+}
+/* Form container styling */
+.my-form {
+  text-align: center;
+  padding: 20px; /* Add some padding for content below the cone */
+}
+
+/* Form input and button styling */
+.my-form input[type="text"],
+.my-form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.my-form button {
+  width: 100%;
+  background-color: #007BFF; /* Button color */
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.my-form button:hover {
+  background-color: #0056b3; /* Button color on hover */
+}
+.login-card {
+  background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Optional: Fixes the background image in place */
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  
+  left: 0;
+}
