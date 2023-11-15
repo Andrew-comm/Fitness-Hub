@@ -1,8 +1,4 @@
-/* Update the CSS to overlay the content on the image */
-/* Remove the unnecessary CSS variables and button styles */
-/* Keep the default Bootstrap button styles */
 
-/* Corrected CSS for the hero image and overlay */
 .hero {
   position: relative;
 }
@@ -10,7 +6,7 @@
 .hero-image-container {
   position: relative;
   width: 100%;
-  height: 100vh; /* Set the height as needed to cover the entire viewport */
+  height: 100vh; 
   overflow: hidden;
 }
 
@@ -21,7 +17,6 @@
   object-position: center center;
 }
 
-/* Updated CSS for the hero content and buttons */
 .hero-content {
   position: absolute;
   top: 0;
@@ -37,7 +32,6 @@
   z-index: 1;
 }
 
-/* Style the title and paragraph */
 .hero-content .content h2 {
   font-size: 32px;
   font-weight: 700;
@@ -47,8 +41,6 @@
 .hero-content .content p {
   color: #f5f5f5;
 }
-
-/* Style the form buttons using Bootstrap classes */
 .hero-content .sign-up-login-form {
   display: flex;
   align-items: center;
@@ -58,22 +50,15 @@
   margin: 0 10px;
   cursor: pointer;
 }
-
-/* Apply the Bootstrap button classes to the buttons */
 .hero-content .sign-up-login-form .btn-primary {
-  /* This will use Bootstrap's primary button color */
-  /* Example: Red for "Sign Up" */
   color: white;
 }
 
-.hero-content .sign-up-login-form .btn-secondary {
-  /* This will use Bootstrap's secondary button color */
-  /* Example: Gray for "Login" */
+.hero-content .sign-up-login-form .btn-secondary { 
   color: white;
 }
 
-/* Add hover effect to the buttons if desired */
-.hero-content .sign-up-login-form button:hover {
+ .hero-content .sign-up-login-form button:hover {
   opacity: 0.8;
 }
 
