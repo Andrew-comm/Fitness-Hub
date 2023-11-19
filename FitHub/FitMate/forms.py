@@ -1,6 +1,6 @@
 from django import forms
-from .models import CustomUser
-from .models import UserProfile
+from .models import CustomUser, Enrollment, UserProfile
+
 
 class CustomUserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
@@ -23,3 +23,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model=UserProfile
         fields='__all__'
+
+
+class EnrollmentForm(forms.ModelForm):
+    class Meta:
+        model = Enrollment
+        fields = '__all__'
