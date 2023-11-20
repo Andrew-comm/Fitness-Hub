@@ -3,8 +3,12 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery
-from .forms import UserProfileForm
+from .models import UserProfile, Gallery, Enrollment
+from .forms import UserProfileForm, EnrollmentForm
+from django.shortcuts import get_object_or_404
+
+
+
 
 
 def home(request):
@@ -111,3 +115,19 @@ def Gallery_view(request):
 
     context = {'gallery':gallery}
     return render(request, 'gallery.html', context)
+
+@login_required
+def enrollment_form(request):
+    # Check if the user already has an enrollment
+    enrollment = get_object_or_404(Enrollment, user=request.user)
+
+    if request.method == 'POST':
+        form = EnrollmentForm(request.POST, instance=enrollment)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirect to a success page
+    else:
+        # If the user doesn't have an enrollment, create a new form
+        form = EnrollmentForm(instance=enrollment)
+
+    return render(request, 'enrollment_form.html', {'form': form})

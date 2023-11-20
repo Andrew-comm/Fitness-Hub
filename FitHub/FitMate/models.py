@@ -102,7 +102,7 @@ class Enrollment(models.Model):
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
     phone = models.CharField(max_length=15)
-    address = models.TextField()
+    address = models.CharField(max_length=30)
     dob = models.DateField()
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female')])
     emergency_contact_name = models.CharField(max_length=50)

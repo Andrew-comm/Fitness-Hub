@@ -44,9 +44,9 @@
               </a>
               <ul class="dropdown-menu text-small">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="{% url 'enrollment' %}">Settings</a></li>
                 {% if user.is_authenticated %}
-                <li><a class="dropdown-item" href="{% url 'profile' user.id%}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>
                 {% else %}
                 <li><a class="dropdown-item" href="#">Create profile</a></li>
                 {% endif %}

@@ -1,0 +1,45 @@
+{% load static %}
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+
+    <style>
+        body {
+            background-image: url("{% static 'images/gym.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps the background image fixed */          
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+  {% block content %}
+  <div class="container mt-5">
+    <div class="card text-center" style="width: 35rem; margin: 0 auto; background-image: url('static/images/gym.png'); background-size: cover;">
+      <div class="card-body">
+        <h2 class="card-title mb-4">Gym Enrollment Form</h2>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+</body>
+</html>
