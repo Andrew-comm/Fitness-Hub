@@ -117,3 +117,15 @@ class Enrollment(models.Model):
 
     def __str__(self):
         return self.user.email
+    
+
+
+class VirtualFitnessClass(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    date_time = models.DateTimeField()
+    instructor = models.ForeignKey(Trainer, on_delete=models.CASCADE, null=True, blank=True)
+    meeting_link = models.URLField()
+
+    def __str__(self):
+        return self.title

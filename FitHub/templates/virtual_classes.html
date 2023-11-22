@@ -1,0 +1,16 @@
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Virtual Fitness Classes</h2>
+    {% for virtual_class in classes %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ virtual_class.title }}</h5>
+          <p class="card-text">{{ virtual_class.description }}</p>
+          <p class="card-text">Instructor: {{ virtual_class.instructor }}</p>
+          <p class="card-text">Date and Time: {{ virtual_class.date_time }}</p>
+          <a href="{{ virtual_class.meeting_link }}" class="btn btn-primary">Join Class</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

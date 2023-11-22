@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery, Enrollment
+from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass
 from .forms import UserProfileForm, EnrollmentForm
 from django.shortcuts import get_object_or_404
 
@@ -131,3 +131,9 @@ def enrollment_form(request):
         form = EnrollmentForm(instance=enrollment)
 
     return render(request, 'enrollment_form.html', {'form': form})
+
+
+def virtual_classes(request):
+    classes = VirtualFitnessClass.objects.all()
+    context = {'classes': classes}
+    return render(request, 'virtual_classes.html', context)
