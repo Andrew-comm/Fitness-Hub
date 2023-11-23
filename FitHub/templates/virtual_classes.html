@@ -1,16 +1,85 @@
+{% load static %}
+
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Home Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-image: url("{% static 'images/gym.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+  
 {% block content %}
-  <div class="container mt-5">
-    <h2 class="mb-4">Virtual Fitness Classes</h2>
-    {% for virtual_class in classes %}
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ virtual_class.title }}</h5>
-          <p class="card-text">{{ virtual_class.description }}</p>
-          <p class="card-text">Instructor: {{ virtual_class.instructor }}</p>
-          <p class="card-text">Date and Time: {{ virtual_class.date_time }}</p>
-          <a href="{{ virtual_class.meeting_link }}" class="btn btn-primary">Join Class</a>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Left Card with Image and Description -->
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="{% static 'images/cover.png' %}" class="card-img-top" alt="Left Image">
+                <div class="card-body">
+                    <h5 class="card-title">Left Card</h5>
+                    <p class="card-text mt-5">This is a description for the left card.</p>
+                </div>
+            </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
+
+        <!-- Center Card -->
+        <div class="col-md-4">
+          <h2 class="mb-4 text-center text-primary">Virtual Fitness Classes</h2>
+          {% for virtual_class in classes %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title mt-0">{{ virtual_class.title }}</h5>
+              <p class="card-text mt-5">{{ virtual_class.description }}</p>
+              <p class="card-text">Instructor: {{ virtual_class.instructor }}</p>
+              <p class="card-text">Date and Time: {{ virtual_class.date_time }}</p>
+              <a href="{{ virtual_class.meeting_link }}" class="btn btn-primary">Join Class</a>
+            </div>
+          </div>
+        {% endfor %}
+    
+        </div>
+
+        <!-- Right Card with Image and Description -->
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <img src="{% static 'images/cover.png' %}" class="card-img-top" alt="Right Image">
+                <div class="card-body">
+                    <h5 class="card-title">Right Card</h5>
+                    <p class="card-text mt-5">This is a description for the right card.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+</body>
+</html>
