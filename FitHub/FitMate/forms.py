@@ -39,3 +39,22 @@ class EnrollmentForm(forms.ModelForm):
             'joining_date': forms.DateInput(attrs={'type': 'date'}),
             'due_date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+
+
+class WorkoutSuggestionForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = [
+            'fitness_level',
+            'fitness_goals',
+            'workout_preferences',
+            'nutritional_preferences',
+            'age',
+            'gender',
+            'height',
+            'weight',
+            'medical_conditions',
+            'medications',
+            'allergies',
+        ]

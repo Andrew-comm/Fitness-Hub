@@ -1,18 +1,20 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
 from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass
-from .forms import UserProfileForm, EnrollmentForm
+from .forms import UserProfileForm, EnrollmentForm, WorkoutSuggestionForm
 from django.shortcuts import get_object_or_404
 
 
 
 
 
-def home(request):
-    gallery = Gallery.objects.all()
+
+
+def home(request):    
     profile = UserProfile.objects.all()  
     if request.user.is_authenticated:          
         profile = UserProfile.objects.get(user=request.user)    
@@ -137,3 +139,31 @@ def virtual_classes(request):
     classes = VirtualFitnessClass.objects.all()
     context = {'classes': classes}
     return render(request, 'virtual_classes.html', context)
+
+
+
+
+@login_required
+def workout_suggestion(request):
+    if request.method == 'POST':
+        form = WorkoutSuggestionForm(request.POST)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+
+            # Use the AI model to suggest a workout
+            user_profile.suggested_workout = suggest_workout(user_profile)
+            user_profile.save()
+
+            return redirect('suggested_workout')  # Redirect to a page showing the suggestion
+    else:
+        form = WorkoutSuggestionForm()
+
+    return render(request, 'workout_suggestion_form.html', {'form': form})
+
+@login_required
+def suggested_workout(request):
+    # Retrieve the latest suggested workout for the logged-in user
+    user_profile = UserProfile.objects.filter(user=request.user).latest('id')
+
+    return render(request, 'suggested_workout.html', {'suggested_workout': user_profile.suggested_workout})

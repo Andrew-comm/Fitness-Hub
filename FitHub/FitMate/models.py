@@ -65,6 +65,25 @@ class UserProfile(models.Model):
     workout_preferences = models.TextField(blank=True)
     nutritional_preferences = models.TextField(blank=True)
 
+    age = models.IntegerField(blank=True, null=True)
+    gender = models.CharField(
+        max_length=10,
+        choices=[
+            ('Male', 'Male'),
+            ('Female', 'Female'),
+            ('Other', 'Other'),
+        ],
+        blank=True
+    )
+    height = models.FloatField(blank=True, null=True)
+    weight = models.FloatField(blank=True, null=True)
+    medical_conditions = models.TextField(blank=True)
+    medications = models.TextField(blank=True)
+    allergies = models.BooleanField(default=False)
+    suggested_workout = models.CharField(max_length=50, blank=True, null=True)
+
+
+
 
 
     def __str__(self):

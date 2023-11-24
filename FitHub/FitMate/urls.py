@@ -13,4 +13,5 @@ urlpatterns = [
     path('virtual-classes/', views.virtual_classes, name='virtual_classes'),
 
 
+
 ]

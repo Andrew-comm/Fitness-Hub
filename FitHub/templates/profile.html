@@ -12,18 +12,45 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <style>
+        body{
+            background-image: url('{% static "images/gym.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+
+
+        }
+
+        .card{
+            max-height: 700px;
+            overflow-y: auto;
+
+        }
+
+    </style>
 </head>
 
-<body style="background-image: url('{% static "images/gym.jpg" %}'); background-size: cover; background-position: center; margin: 0; padding: 0; height: 100vh; overflow: hidden;">
+<body>
     {% block content %}
     <div class="card">
         <h3 class="card-title text-primary">{{ profile.name }}</h3>
         <div class="card-header">
-
             <img src="{{ profile.profile_picture.url }}" class="rounded-circle float-right" alt="Profile Picture" style="max-width: 100px;">
         </div>
         <div class="card-body">
             <p class="card-text mt-2">Bio: {{ profile.bio }}</p>
+            <p class="card-text mt-2">Age: {{ profile.age }}</p>
+            <p class="card-text mt-2">Gender: {{ profile.get_gender_display }}</p>
+            <p class="card-text mt-2">Height: {{ profile.height }} cm</p>
+            <p class="card-text mt-2">Weight: {{ profile.weight }} kg</p>
+            <p class="card-text mt-2">Medical Conditions: {{ profile.medical_conditions }}</p>
+            <p class="card-text mt-2">Medications: {{ profile.medications }}</p>
+            <p class="card-text mt-2">Allergies: {% if profile.allergies %}Yes{% else %}No{% endif %}</p>
+            <p class="card-text mt-2">Suggested Workout: {{ profile.suggested_workout }}</p>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
@@ -44,7 +71,6 @@
             <a href="#" class="card-link">DELETE</a>
         </div>
     </div>
-    
 
 {% endblock %}
 
