@@ -43,7 +43,8 @@
                 {% endif %}
               </a>
               <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
+                <li><a class="dropdown-item" href="{% url 'workout_form' %}">New project</a></li>
+                <li><a class="dropdown-item" href="{% url 'generate_workout' %}">New project</a></li>
                 <li><a class="dropdown-item" href="{% url 'enrollment' %}">Settings</a></li>
                 {% if user.is_authenticated %}
                 <li><a class="dropdown-item" href="{% url 'profile' user.id %}">Profile</a></li>

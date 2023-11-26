@@ -11,6 +11,8 @@ urlpatterns = [
     path('gallery/', views.Gallery_view, name='gallery'),
     path('enrollment/', views.enrollment_form, name='enrollment'),
     path('virtual-classes/', views.virtual_classes, name='virtual_classes'),
+    path('suggest_workout/', views.suggest_workout, name='workout_form'),
+    path('generate-workout/', views.generate_workout, name='generate_workout'),
 
 
 

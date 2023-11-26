@@ -5,8 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
 from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass
-from .forms import UserProfileForm, EnrollmentForm, WorkoutSuggestionForm
+from .forms import UserProfileForm, EnrollmentForm
 from django.shortcuts import get_object_or_404
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 
 
 
@@ -140,30 +144,55 @@ def virtual_classes(request):
     context = {'classes': classes}
     return render(request, 'virtual_classes.html', context)
 
+def suggest_workout(request):
+    return render(request, 'workout_form.html')
 
+def generate_workout(request):
+    data = pd.read_csv("gym_data.csv")
+    features = data[['age', 'height', 'weight', 'fitness_level', 'gender']]
+    target = data['suggested_workout']
 
+    # Fit the encoder for all categorical variables
+    encoder = LabelEncoder()
+    features['fitness_level'] = encoder.fit_transform(features['fitness_level'])
+    features['gender'] = encoder.fit_transform(features['gender'])
 
-@login_required
-def workout_suggestion(request):
+    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+
     if request.method == 'POST':
-        form = WorkoutSuggestionForm(request.POST)
-        if form.is_valid():
-            user_profile = form.save(commit=False)
-            user_profile.user = request.user
+        # Extracting form data
+        age = int(request.POST.get('age'))
+        height = float(request.POST.get('height'))
+        weight = float(request.POST.get('weight'))
+        fitness_level = request.POST.get('fitness_level')
+        gender = request.POST.get('gender')
 
-            # Use the AI model to suggest a workout
-            user_profile.suggested_workout = suggest_workout(user_profile)
-            user_profile.save()
+        # Encode categorical variables
+        try:
+            fitness_level_encoded = encoder.transform([fitness_level])[0]
+        except ValueError:
+            # If the fitness level is not in the encoder classes, use the first class
+            fitness_level_encoded = encoder.transform([encoder.classes_[0]])[0]
 
-            return redirect('suggested_workout')  # Redirect to a page showing the suggestion
-    else:
-        form = WorkoutSuggestionForm()
+        try:
+            gender_encoded = encoder.transform([gender])[0]
+        except ValueError:
+            # If the gender is not in the encoder classes, use the first class
+            gender_encoded = encoder.transform([encoder.classes_[0]])[0]
 
-    return render(request, 'workout_suggestion_form.html', {'form': form})
+        # Predict workout
+        workout_prediction = model.predict([[age, height, weight, fitness_level_encoded, gender_encoded]])[0]
 
-@login_required
-def suggested_workout(request):
-    # Retrieve the latest suggested workout for the logged-in user
-    user_profile = UserProfile.objects.filter(user=request.user).latest('id')
+        # Check if there are similar workouts in the CSV
+        close_workouts = target[(target == workout_prediction)]
+        if not close_workouts.empty:
+            suggestion = f"We suggest: {workout_prediction}"
+        else:
+            suggestion = f"No similar workout found. Suggested workout: {workout_prediction}"
 
-    return render(request, 'suggested_workout.html', {'suggested_workout': user_profile.suggested_workout})
+        return render(request, 'workout_result.html', {'workout_suggestion': suggestion})
+
+    return render(request, 'workout_form.html')
