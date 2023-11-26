@@ -1,12 +1,47 @@
+{% load static %}
 <!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Result</title>
+
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
-    <h2>Workout Suggestion</h2>
-    <p>{{ workout_suggestion }}</p>
+    <section>
+        <span class="overlay"></span>
+
+        <div class="modal-box {% if workout_suggestion %} active {% endif %}">
+            <i class="fa-regular fa-circle-check"></i>
+            <h2>Workout Suggestion</h2>
+            <p>{{ workout_suggestion }}</p>
+
+            <div class="buttons">
+                <button class="close-btn">Ok, Close</button>
+                <!-- Add any additional buttons or actions here -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const section = document.querySelector("section"),
+            overlay = document.querySelector(".overlay"),
+            closeBtn = document.querySelector(".close-btn");
+
+        overlay.addEventListener("click", () => {
+            section.classList.remove("active");
+        });
+
+        closeBtn.addEventListener("click", () => {
+            section.classList.remove("active");
+        });
+    </script>
 </body>
 </html>

@@ -1,37 +1,63 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/workout.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
-<body>
-    <h2>Workout Suggestion Form</h2>
-    <form method="post" action="{% url 'generate_workout' %}">
-        {% csrf_token %}
-        <label for="age">Age:</label>
-        <input type="number" name="age" required><br>
+<body class="bg-dark"> <!-- Added a Bootstrap class for background color -->
 
-        <label for="height">Height (cm):</label>
-        <input type="number" name="height" step="any" required><br>
+    <div class="container mt-5">
+        <div class="form-container bg-light p-4 rounded">
+            <h2 class="text-center mb-4">Workout Suggestion Form</h2>
+            <form method="post" action="{% url 'generate_workout' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" name="age" class="form-control" required>
+                </div>
 
-        <label for="weight">Weight (kg):</label>
-        <input type="number" name="weight" step="any" required><br>
+                <div class="form-group">
+                    <label for="height">Height (cm):</label>
+                    <input type="number" name="height" class="form-control" step="any" required>
+                </div>
 
-        <label for="fitness_level">Fitness Level:</label>
-        <select name="fitness_level" required>
-            <option value="Beginner">Beginner</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-        </select><br>
+                <div class="form-group">
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" name="weight" class="form-control" step="any" required>
+                </div>
 
-        <label for="gender">Gender:</label>
-        <select name="gender" required>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select><br>
+                <div class="form-group">
+                    <label for="fitness_level">Fitness Level:</label>
+                    <select name="fitness_level" class="form-control" required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
 
-        <button type="submit">Get Workout Suggestion</button>
-    </form>
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select name="gender" class="form-control" required>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-success btn-block">Get Workout Suggestion</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
