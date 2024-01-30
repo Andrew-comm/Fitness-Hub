@@ -1,0 +1,162 @@
+{% load static %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Create Profile</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        /* Background image */
+        body {
+            background-image: url("{% static 'images/gym.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Center content vertically */
+        .vertical-center {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Card styling */
+        .card {
+            margin-top: 20px;
+            background-color: white; /* Changed to white */
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 500px; /* Reduced width */
+        }
+
+        .card-body {
+            padding: 30px; /* Adjust padding for content */
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 10px; /* Rounded corners */
+            border-color: #f54966; /* Pink color */
+        }
+
+        .form-control:focus {
+            border-color: #e63e5f; /* Darker pink color */
+            box-shadow: 0 0 0 0.25rem rgba(245, 73, 102, 0.25); /* Focus shadow */
+        }
+
+        .btn-primary {
+            background-color: #f54966; /* Pink color */
+            border-color: #f54966; /* Pink color */
+        }
+
+        .btn-primary:hover {
+            background-color: #e63e5f; /* Darker pink color */
+            border-color: #e63e5f; /* Darker pink color */
+        }
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="row justify-content-center vertical-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">Create Profile</h2>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="id_name" name="name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_bio" class="form-label">Bio</label>
+                                <textarea class="form-control" id="id_bio" name="bio"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_profile_picture" class="form-label">Profile Picture</label>
+                                <input type="file" class="form-control" id="id_profile_picture" name="profile_picture">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_fitness_level" class="form-label">Fitness Level</label>
+                                <select class="form-select" id="id_fitness_level" name="fitness_level">
+                                    <option value="" selected disabled>Select Fitness Level</option>
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_fitness_goals" class="form-label">Fitness Goals</label>
+                                <textarea class="form-control" id="id_fitness_goals" name="fitness_goals"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_workout_preferences" class="form-label">Workout Preferences</label>
+                                <textarea class="form-control" id="id_workout_preferences" name="workout_preferences"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_nutritional_preferences" class="form-label">Nutritional Preferences</label>
+                                <textarea class="form-control" id="id_nutritional_preferences" name="nutritional_preferences"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_age" class="form-label">Age</label>
+                                <input type="number" class="form-control" id="id_age" name="age">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_gender" class="form-label">Gender</label>
+                                <select class="form-select" id="id_gender" name="gender">
+                                    <option value="" selected disabled>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_height" class="form-label">Height</label>
+                                <input type="number" class="form-control" id="id_height" name="height">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_weight" class="form-label">Weight</label>
+                                <input type="number" class="form-control" id="id_weight" name="weight">
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_medical_conditions" class="form-label">Medical Conditions</label>
+                                <textarea class="form-control" id="id_medical_conditions" name="medical_conditions"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_medications" class="form-label">Medications</label>
+                                <textarea class="form-control" id="id_medications" name="medications"></textarea>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="id_allergies" name="allergies">
+                                <label class="form-check-label" for="id_allergies">Allergies</label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_suggested_workout" class="form-label">Suggested Workout</label>
+                                <input type="text" class="form-control" id="id_suggested_workout" name="suggested_workout">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-block mt-4">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

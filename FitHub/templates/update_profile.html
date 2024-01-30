@@ -1,129 +1,98 @@
 {% load static %}
+{% include 'navbar.html' %}
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Update Profile</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-
     <style>
+        /* Add custom styles here */
         body {
-            background-image: url("{% static 'images/gym.jpg' %}");
+            background-image: url("{% static 'images/gym.jpg' %}"); /* Path to your background image */
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Keeps the background image fixed */
             margin: 0;
             padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
-
         .container {
-            max-width: 500px; /* Adjust as needed */
+            background-color: #f54966; /* Pink color */
+            padding: 10px; /* Adjusted padding */
+            border-radius: 15px;
+            margin-top: 20px;
+            max-width: 600px; /* Reduced width */
         }
-        .card{
-            background-color: rgb(240, 87, 112);
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 10px; /* Adjusted margin */
+            max-width: 500px; /* Reduced width */
+            max-height: 400px; /* Reduced height */
+            overflow-y: auto; /* Add scroll if content exceeds height */
         }
-
-        .card-body {
-            overflow: auto; /* Adds a scroll bar to the card body if contents exceed the card's height */
-            max-height: 500px; /* Maximum height for the card body before scrolling appears */
-        }
-
-         /* Style labels */
-        .form-group label {
+        .form-label {
             font-weight: bold;
         }
-
-        /* Style the button */
         .btn-primary {
-            background-color: #007BFF;
-            border-color: #007BFF;
+            background-color: #f54966; /* Pink color */
+            border-color: #f54966; /* Pink color */
         }
-
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        /* Custom styling for form */
-        /* Add spacing between form fields */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        /* Style form inputs */
-        input.form-control {
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        /* Style select inputs */
-        select.form-select {
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        /* Style textareas */
-        textarea.form-control {
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
+            background-color: #e63e5f; /* Darker pink color */
+            border-color: #e63e5f; /* Darker pink color */
         }
     </style>
 </head>
-
-
-
 <body>
+
     {% block content %}
-    <div class="container">
-        <div class="card">
-            <h3 class="card-title text-primary text-center">Update Your Profile</h3>
-            <div class="card-body">
-                <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="{{ form.name.id_for_label }}">Name</label>
-                        {{ form.name }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.bio.id_for_label }}">Bio</label>
-                        {{ form.bio }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.profile_picture.id_for_label }}">Profile picture</label>
-                        {{ form.profile_picture }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.fitness_level.id_for_label }}">Fitness level</label>
-                        {{ form.fitness_level }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.fitness_goals.id_for_label }}">Fitness goals</label>
-                        {{ form.fitness_goals }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.workout_preferences.id_for_label }}">Workout preferences</label>
-                        {{ form.workout_preferences }}
-                    </div>
-                    <div class="form-group">
-                        <label for="{{ form.nutritional_preferences.id_for_label }}">Nutritional preferences</label>
-                        {{ form.nutritional_preferences }}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </form>
-            </div>
+<div class="container">
+    <h2 class="text-center text-white">Update Profile</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_name" class="form-label">Name</label>
+                    {{ form.name}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_bio" class="form-label">Bio</label>
+                    {{ form.bio}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_profile_picture" class="form-label">Profile Picture</label>
+                    {{ form.profile_picture}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_fitness_level" class="form-label">Fitness Level</label>
+                    {{ form.fitness_level }}
+                </div>
+                <div class="mb-3">
+                    <label for="id_fitness_goals" class="form-label">Fitness Goals</label>
+                    {{ form.fitness_goals}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_workout_preferences" class="form-label">Workout Preferences</label>
+                    {{ form.workout_preferences}}
+                </div>
+                <div class="mb-3">
+                    <label for="id_nutritional_preferences" class="form-label">Nutritional Preferences</label>
+                    {{ form.nutritional_preferences}}
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
+    
 </body>
 </html>

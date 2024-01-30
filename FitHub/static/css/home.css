@@ -81,80 +81,76 @@
 
 
 /* Card container styling */
-.register-card{
-  background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
+.register-card {
   background-size: cover;
   background-position: center;
-  background-attachment: fixed; /* Optional: Fixes the background image in place */
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
- 
-  left: 0;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.card { 
-  width: 400px; 
-  margin: 20px auto;
+.card {
+  width: 400px;
   border: 1px solid #ddd;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   background-color: #fff;
   transition: transform 0.2s;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: linear-gradient(to right, #FF1493, #FF69B4); /* Background gradient */
 }
 
-/* Add hover effect for the card */
 .card:hover {
   transform: scale(1.05);
 }
+
 .card-title {
   text-align: center;
-  color: #fff; /* White color for the title inside the cone */
-  font-size: 18px; /* Increase the font size for better visibility */
+  color: #fff;
+  font-size: 18px;
   font-weight: bold;
-  position: relative; /* Set the title as a relative position */
-  top: 35px; /* Adjust the vertical position to fit it inside the cone */
+  position: relative;
+  top: 35px;
 }
 
-/* Cone shape styling */
 .cone {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   border-left: 75px solid transparent;
   border-right: 75px solid transparent;
-  border-bottom: 30px solid #3516e6; /* Pink color for the cone */
-  z-index: 1; /* Place it above the card */
+  border-bottom: 30px solid #3516e6;
+  z-index: 1;
   margin-bottom: 20px;
 }
-/* Form container styling */
+
 .my-form {
-  text-align: center;
-  padding: 20px; /* Add some padding for content below the cone */
+  padding: 20px;
 }
 
-/* Form input and button styling */
-.my-form input[type="text"],
-.my-form input[type="password"] {
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   width: 100%;
   padding: 10px;
-  margin: 5px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.my-form button {
+button {
   width: 100%;
-  background-color: #007BFF; /* Button color */
+  background-color: #007BFF;
   color: #fff;
   padding: 10px;
   border: none;
@@ -162,9 +158,11 @@
   cursor: pointer;
 }
 
-.my-form button:hover {
-  background-color: #0056b3; /* Button color on hover */
+button:hover {
+  background-color: #0056b3;
 }
+
+
 .login-card {
   background-image: url('../images/gym.jpg'); /* Replace 'your-image-url.jpg' with your background image URL */
   background-size: cover;

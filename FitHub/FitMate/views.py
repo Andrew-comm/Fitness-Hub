@@ -1,4 +1,5 @@
 
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -16,64 +17,64 @@ from sklearn.preprocessing import LabelEncoder
 
 
 
-
-
-def home(request):    
-    profile = UserProfile.objects.all()  
-    if request.user.is_authenticated:          
-        profile = UserProfile.objects.get(user=request.user)    
-    return render(request, 'home.html',{'profile':profile})
+def home(request):
+    try:
+        if request.user.is_authenticated:
+            profile = UserProfile.objects.get(user=request.user)
+        else:
+            profile = None
+    except UserProfile.DoesNotExist:
+        profile = None
+    
+    return render(request, 'home.html', {'profile': profile})
 
 #view profile
-User = get_user_model()
-
-def view_profile(request, pk):
-    user = User.objects.get(pk=pk)
-    profile = user.userprofile
-    return render(request, 'profile.html', {'user': user, 'profile': profile})
-
-def update_profile(request, pk):
-    user = User.objects.get(pk=pk)
-
+@login_required
+def view_profile(request):
     try:
-        profile = user.userprofile
+        profile = request.user.userprofile
+        return render(request, 'profile.html', {'profile': profile})
     except UserProfile.DoesNotExist:
-        return redirect('home')
+        # Redirect to create profile view
+        return redirect('create_profile')
+    
 
+
+
+def create_profile(request):
+    try:
+        profile = request.user.userprofile
+        return redirect('profile')  # Redirect if profile already exists
+    except UserProfile.DoesNotExist:
+        if request.method == 'POST':
+            form = UserProfileForm(request.POST, request.FILES)
+            if form.is_valid():
+                profile = form.save(commit=False)
+                profile.user = request.user
+                profile.save()
+                return redirect('profile')  # Redirect to the user's profile without any additional parameters
+        else:
+            form = UserProfileForm()
+        return render(request, 'create_profile.html', {'form': form})
+
+@login_required
+def update_profile(request):
+    profile = request.user.userprofile
     if request.method == 'POST':
         form = UserProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
-            profile = form.save()
-            return redirect('profile', pk=pk)  # Redirect to the 'view_profile' view
+            form.save()
+            return redirect('profile')
     else:
         form = UserProfileForm(instance=profile)
     return render(request, 'update_profile.html', {'form': form})
 
-#create profile
+
 @login_required
-def create_profile(request):
-    if request.method == 'POST':
-        form = UserProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = request.user  # Associate the profile with the logged-in user
-            profile.save()
-            return redirect('view_profile', username=request.user.username)
-    else:
-        form = UserProfileForm()
-    return render(request, 'profile.html', {'form': form})
-
-
-
-
-#delete profile
-
-def delete_profile(request):
-    if request.method == 'POST':
-        profile = request.user.userprofile
-        profile.delete()
-        return redirect('home')
-    return render(request, 'confirm_delete_profile.html')
+def delete_profile(request, pk):
+    profile = get_object_or_404(UserProfile, pk=pk)
+    profile.delete()
+    return redirect('home')
 
 
 
@@ -89,24 +90,27 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
-
 def login_view(request):
+    if request.user.is_authenticated:
+        logout(request)  # Logout any user already logged in
+    
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        print(f"Email: {email}, Password: {password}") 
+        # print(f"Email: {email}, Password: {password}") 
 
         # Authenticate using email
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
             login(request, user)
-            return redirect('home')  # Redirect to the 'home' view or URL name
+            # Redirect to the previous page or 'home' if not available
+            return redirect(request.GET.get('next', 'home'))  
         else:
             # Handle authentication failure
-            return redirect('home')
+            error_message = "Invalid email or password. Please try again."
+            return render(request, 'login.html', {'error_message': error_message})
     return render(request, 'login.html')
-
 
 def logout_view(request):
     logout(request)  # This logs out the user
@@ -138,7 +142,7 @@ def enrollment_form(request):
 
     return render(request, 'enrollment_form.html', {'form': form})
 
-
+@login_required
 def virtual_classes(request):
     classes = VirtualFitnessClass.objects.all()
     context = {'classes': classes}
@@ -147,6 +151,8 @@ def virtual_classes(request):
 def suggest_workout(request):
     return render(request, 'workout_form.html')
 
+
+@login_required
 def generate_workout(request):
     data = pd.read_csv("gym_data.csv")
     features = data[['age', 'height', 'weight', 'fitness_level', 'gender']]

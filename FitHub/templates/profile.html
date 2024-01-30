@@ -1,81 +1,102 @@
 {% load static %}
-
-
+{% include 'navbar.html' %}
+<!DOCTYPE html>
 <html>
-
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Home Page</title>
+    <title>Profile</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <style>
-        body{
-            background-image: url('{% static "images/gym.jpg" %}');
+        body {
+            background-image: url("{% static 'images/gym.jpg' %}"); /* Path to your background image */
             background-size: cover;
             background-position: center;
             margin: 0;
             padding: 0;
-            height: 100vh;
-            overflow: hidden;
-
-
         }
-
-        .card{
-            max-height: 700px;
-            overflow-y: auto;
-
+        .container {
+            background-color: #f54966; /* Pink color */
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
         }
-
+        .profile-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .profile-card img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        /* Style form inputs */
+        .form-control {
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            width: 100%;
+        }
+        /* Style buttons */
+        .btn {
+            margin-right: 10px;
+        }
     </style>
 </head>
-
 <body>
     {% block content %}
-    <div class="card">
-        <h3 class="card-title text-primary">{{ profile.name }}</h3>
-        <div class="card-header">
-            <img src="{{ profile.profile_picture.url }}" class="rounded-circle float-right" alt="Profile Picture" style="max-width: 100px;">
-        </div>
-        <div class="card-body">
-            <p class="card-text mt-2">Bio: {{ profile.bio }}</p>
-            <p class="card-text mt-2">Age: {{ profile.age }}</p>
-            <p class="card-text mt-2">Gender: {{ profile.get_gender_display }}</p>
-            <p class="card-text mt-2">Height: {{ profile.height }} cm</p>
-            <p class="card-text mt-2">Weight: {{ profile.weight }} kg</p>
-            <p class="card-text mt-2">Medical Conditions: {{ profile.medical_conditions }}</p>
-            <p class="card-text mt-2">Medications: {{ profile.medications }}</p>
-            <p class="card-text mt-2">Allergies: {% if profile.allergies %}Yes{% else %}No{% endif %}</p>
-            <p class="card-text mt-2">Suggested Workout: {{ profile.suggested_workout }}</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <h5>Fitness Goals</h5>
-                {{ profile.fitness_goals }}
-            </li>
-            <li class="list-group-item">
-                <h5>Workout Preferences</h5>
-                {{ profile.workout_preferences }}
-            </li>
-            <li class="list-group-item">
-                <h5>Nutritional Preferences</h5>
-                {{ profile.nutritional_preferences }}
-            </li>
-        </ul>
-        <div class="card-body">
-            <a href="{% url 'update-profile' user.id %}" class="card-link">UPDATE</a>
-            <a href="#" class="card-link">DELETE</a>
+    <div class="container">
+        <h2 class="text-center text-white">User Profile</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="profile-card">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture">
+                        </div>
+                        <div class="col-md-8">
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Name:</strong> {{ profile.name }}</li>
+                                <li class="list-group-item"><strong>Bio:</strong> {{ profile.bio }}</li>
+                                <li class="list-group-item"><strong>Age:</strong> {{ profile.age }}</li>
+                                <li class="list-group-item"><strong>Gender:</strong> {{ profile.get_gender_display }}</li>
+                                <li class="list-group-item"><strong>Height:</strong> {{ profile.height }} cm</li>
+                                <li class="list-group-item"><strong>Weight:</strong> {{ profile.weight }} kg</li>
+                                <li class="list-group-item"><strong>Medical Conditions:</strong> {{ profile.medical_conditions }}</li>
+                                <li class="list-group-item"><strong>Medications:</strong> {{ profile.medications }}</li>
+                                <li class="list-group-item"><strong>Allergies:</strong> {% if profile.allergies %}Yes{% else %}No{% endif %}</li>
+                                <li class="list-group-item"><strong>Suggested Workout:</strong> {{ profile.suggested_workout }}</li>
+                            </ul>
+                            <div class="mt-3">
+                                <h5>Fitness Goals</h5>
+                                <p>{{ profile.fitness_goals }}</p>
+                            </div>
+                            <div class="mt-3">
+                                <h5>Workout Preferences</h5>
+                                <p>{{ profile.workout_preferences }}</p>
+                            </div>
+                            <div class="mt-3">
+                                <h5>Nutritional Preferences</h5>
+                                <p>{{ profile.nutritional_preferences }}</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'update_profile'  %}" class="btn btn-primary">Update Profile</a>
+                                <a href="{% url 'delete_profile' profile.pk %}" class="btn btn-danger">Delete Profile</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-{% endblock %}
-
-
+    {% endblock %}
 </body>
-
-
 </html>
