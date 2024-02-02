@@ -40,7 +40,7 @@ def view_profile(request):
     
 
 
-
+@login_required
 def create_profile(request):
     try:
         profile = request.user.userprofile

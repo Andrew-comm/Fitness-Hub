@@ -12,42 +12,39 @@
     {% bootstrap_javascript %}
     <style>
         body {
-            background-image: url("{% static 'images/gym.jpg' %}"); /* Path to your background image */
+            background-image: url("{% static 'images/gym.jpg' %}");
             background-size: cover;
             background-position: center;
             margin: 0;
             padding: 0;
         }
         .container {
-            background-color: #f54966; /* Pink color */
-            padding: 20px;
-            border-radius: 15px;
+            background-color: #f54966;
+            padding: 10px;
+            border-radius: 10px;
             margin-top: 20px;
+            margin-bottom: 20px;
+            max-width: 600px; /* Reduced max-width */
         }
         .profile-card {
             background-color: white;
-            border-radius: 15px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             margin-top: 20px;
+            max-width: 600px; /* Reduced max-width */
         }
         .profile-card img {
             border-radius: 50%;
-            width: 150px;
-            height: 150px;
+            width: 120px; /* Reduced image size */
+            height: 120px; /* Reduced image size */
             object-fit: cover;
-        }
-        /* Style form inputs */
-        .form-control {
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ced4da;
-            padding: 10px;
-            width: 100%;
+            margin-bottom: 10px; /* Added margin-bottom */
         }
         /* Style buttons */
         .btn {
-            margin-right: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
     </style>
 </head>

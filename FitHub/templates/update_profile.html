@@ -12,9 +12,9 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <style>
-        /* Add custom styles here */
+        /* Background image */
         body {
-            background-image: url("{% static 'images/gym.jpg' %}"); /* Path to your background image */
+            background-image: url("{% static 'images/gym.jpg' %}");
             background-size: cover;
             background-position: center;
             margin: 0;
@@ -22,20 +22,19 @@
         }
         .container {
             background-color: #f54966; /* Pink color */
-            padding: 10px; /* Adjusted padding */
+            padding: 20px; /* Adjusted padding */
             border-radius: 15px;
             margin-top: 20px;
-            max-width: 600px; /* Reduced width */
+            margin-bottom: 25px;
+            max-width: 600px; /* Same as create profile */
         }
         .card {
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            margin-top: 10px; /* Adjusted margin */
-            max-width: 500px; /* Reduced width */
-            max-height: 400px; /* Reduced height */
-            overflow-y: auto; /* Add scroll if content exceeds height */
+            margin-top: 10px; /* Adjusted margin */            
+            max-width: 600px; /* Same as create profile */
         }
         .form-label {
             font-weight: bold;
