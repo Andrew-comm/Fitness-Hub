@@ -3,12 +3,23 @@
 <head>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <style>
-        #user-email{
-  width: 100%;
+       #user-email {
+  /* Override styles from .form-group */
+  width: 90%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 15px;
+  border-radius: 5px;
+  /* Additional styles to match other form inputs */
+  background-color: #fff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
+
+.label{
+  display: block; /* Ensure label occupies full width */
+  margin-bottom: 5px; /* Add space between label and input */
+}
+
     </style>
 
 </head>
@@ -16,17 +27,19 @@
     <div class="register-card">
         <div class="card">
             <div class="cone">
-                <h3 class="card-title">Welcome to GymGenius</h3> 
+                <h3 class="card-title text-dark">Welcome to GymGenius</h3> 
             </div>
             <div class="card-body">
                 <form method="post" class="my-form">
                     {% csrf_token %}
+                    <p class="text-center">Email:</p>
                     <div class="form-group" id="user-email">
-                        <label for="id_email"> Email:</label>
+
+                        <label for="id_email"></label>
                         {{ form.email }}
                     </div>
                     <div class="form-group">
-                        <label for="id_first_name">First Name:</label>
+                        <label class="label" for="id_first_name">First Name:</label>
                         {{ form.first_name }}
                     </div>
                     <div class="form-group">
