@@ -1,45 +1,220 @@
 {% load static %}
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="{% static 'css/home.css' %}"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Enrollment Form</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
-
     <style>
         body {
             background-image: url("{% static 'images/gym.jpg' %}");
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Keeps the background image fixed */          
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .card {
+            margin-top: 75px;
+            margin-bottom: 25px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-title {
+            color: #333;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-group label {
+            color: #555;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+
+        .btn-primary:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        .jumbotron {
+            
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            margin-top: 30px;
+            color: #333;
+        }
+        .jumbotron-body{
+            margin-top:75px ;
+
+        }
+
+        .jumbotron img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .jumbotron p {
+            margin-top: 20px;
+        }
+
+        .alert {
+            margin-top: 30px;
         }
     </style>
 </head>
 
 <body>
-  {% block content %}
-  <div class="container mt-5">
-    <div class="card text-center" style="width: 35rem; margin: 0 auto; background-image: url('static/images/gym.png'); background-size: cover;">
-      <div class="card-body">
-        <h2 class="card-title mb-4">Gym Enrollment Form</h2>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Gym Enrollment Form</h2>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="dob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob" name="dob" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select class="form-select" id="gender" name="gender" required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="emergency_contact_name" class="form-label">Emergency Contact Name</label>
+                                    <input type="text" class="form-control" id="emergency_contact_name" name="emergency_contact_name" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="emergency_contact_phone" class="form-label">Emergency Contact Phone</label>
+                                    <input type="text" class="form-control" id="emergency_contact_phone" name="emergency_contact_phone" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="agreement" class="form-label">Agreement</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="agreement" name="agreement" required>
+                                        <label class="form-check-label" for="agreement">
+                                            I agree to the terms and conditions
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="joining_date" class="form-label">Joining Date</label>
+                                    <input type="date" class="form-control" id="joining_date" name="joining_date" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="membership_plan" class="form-label">Membership Plan</label>
+                                    <select class="form-select" id="membership_plan" name="membership_plan" required>
+                                        <!-- Add Membership Plan Options Here -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="payment_status" class="form-label">Payment Status</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="payment_status" name="payment_status">
+                                        <label class="form-check-label" for="payment_status">
+                                            Payment Status
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="trainer" class="form-label">Trainer</label>
+                                    <select class="form-select" id="trainer" name="trainer">
+                                        <!-- Add Trainer Options Here -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="text" class="form-control" id="price" name="price" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="due_date" class="form-label">Due Date</label>
+                                    <input type="date" class="form-control" id="due_date" name="due_date" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 jumbotron-body">
+                <div class="jumbotron">
+                    <h2 class="display-5">Welcome to Our Gym!</h2>
+                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut posuere libero, sit amet ultricies quam. Ut auctor viverra ante a sagittis.</p>
+                    <hr class="my-4">
+                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                    <img src="{% static 'images/gym.jpg' %}" alt="Gym Image">
+                    <p class="mt-3">This is a cool image description.</p>
+                </div>
+                <div class="alert alert-success" role="alert">
+                    Congratulations! You have successfully enrolled in our gym.
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-{% endblock %}
-
 </body>
+
 </html>
