@@ -39,13 +39,13 @@ class EnrollmentForm(forms.ModelForm):
         fields = [
             'first_name', 'last_name', 'email', 'phone', 'address', 'dob', 'gender',
             'emergency_contact_name', 'emergency_contact_phone', 'agreement',
-            'joining_date', 'payment_status', 'membership_plan', 'trainer',
-            'price', 'due_date'
+            'joining_date', 'payment_status', 'membership_plan', 'trainer'
+           
         ]
         widgets = {
             'dob': forms.DateInput(attrs={'type': 'date'}),
             'joining_date': forms.DateInput(attrs={'type': 'date'}),
-            'due_date': forms.DateInput(attrs={'type': 'date'}),
+            
         }
 
 

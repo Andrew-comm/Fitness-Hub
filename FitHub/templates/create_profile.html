@@ -12,15 +12,27 @@
     {% bootstrap_javascript %}
     <style>
         /* Background image */
-        body {
-            background-image: url("{% static 'images/gym.jpg' %}");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
+   body {
+    background-color: rgba(255, 255, 255, 0.8); /* Clearer background color */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+}
+
+body::after {
+    content: "";
+    background-image: url("{% static 'images/gym.jpg' %}");
+    opacity: 0.5; /* Adjust the value to control the level of opacity for the image */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    z-index: -1;
+}
+
 
         /* Center content vertically */
         .vertical-center {
