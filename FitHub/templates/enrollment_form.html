@@ -1,8 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +9,8 @@
     {% bootstrap_css %}
     {% bootstrap_javascript %}
     <style>
-        body {
+
+body {
             background-image: url("{% static 'images/gym.jpg' %}");
             background-size: cover;
             background-position: center;
@@ -19,13 +18,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            /* height: 100vh; */
             margin: 0;
             padding: 0;
         }
 
         .card {
-            margin-top: 75px;
+            margin-top: 10px;
             margin-bottom: 25px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 15px;
@@ -64,7 +63,7 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             padding: 30px;
-            margin-top: 30px;
+            margin-top: 15px;
             color: #333;
         }
         .jumbotron-body{
@@ -85,16 +84,22 @@
         .alert {
             margin-top: 30px;
         }
+        
     </style>
 </head>
-
 <body>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="card-title mb-4">Gym Enrollment Form</h2>
+                        <h2 class="card-title mb-4 text-center">Gym Enrollment Form</h2>
+                        {% if enrollment_exists %}
+                            <p class="text-center text-success">You are already enrolled. You can update your details below:</p>
+                        {% else %}
+                            <p class="text-center text-info">Please fill out the form below to enroll:</p>
+                        {% endif %}
+                        
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row mb-3">
@@ -163,7 +168,9 @@
                                 <div class="col-md-6">
                                     <label for="membership_plan" class="form-label">Membership Plan</label>
                                     <select class="form-select" id="membership_plan" name="membership_plan" required>
-                                        <!-- Add Membership Plan Options Here -->
+                                        {% for plan in membership_plans %}
+                                        <option value="{{ plan.pk }}" data-price="{{ plan.price }}">{{ plan.name }} - {{plan.price}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
@@ -180,20 +187,13 @@
                                 <div class="col-md-6">
                                     <label for="trainer" class="form-label">Trainer</label>
                                     <select class="form-select" id="trainer" name="trainer">
-                                        <!-- Add Trainer Options Here -->
+                                        {% for trainer in trainers %}
+                                        <option value="{{ trainer.pk }}">{{ trainer.name }}--{{trainer.expertise}}</option>
+                                        {% endfor %}
                                     </select>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="price" class="form-label">Price</label>
-                                    <input type="text" class="form-control" id="price" name="price" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="due_date" class="form-label">Due Date</label>
-                                    <input type="date" class="form-control" id="due_date" name="due_date" required>
-                                </div>
-                            </div>
+                          
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -216,5 +216,8 @@
         </div>
     </div>
 </body>
-
 </html>
+
+
+
+

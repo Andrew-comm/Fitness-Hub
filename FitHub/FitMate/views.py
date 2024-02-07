@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass
+from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan
 from .forms import UserProfileForm, EnrollmentForm
 from django.shortcuts import get_object_or_404
 import pandas as pd
@@ -17,12 +17,10 @@ from sklearn.preprocessing import LabelEncoder
 
 
 
+@login_required
 def home(request):
     try:
-        if request.user.is_authenticated:
-            profile = UserProfile.objects.get(user=request.user)
-        else:
-            profile = None
+        profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         profile = None
     
@@ -127,20 +125,36 @@ def Gallery_view(request):
     return render(request, 'gallery.html', context)
 
 
+
+@login_required
 def enrollment_form(request):
     # Check if the user already has an enrollment
-    # enrollment = get_object_or_404(Enrollment, user=request.user)
+    enrollment_instance = Enrollment.objects.filter(user=request.user).first()
+    enrollment_exists = enrollment_instance is not None
 
     if request.method == 'POST':
-        form = EnrollmentForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')  # Redirect to a success page
-    else:
-        # If the user doesn't have an enrollment, create a new form
-        form = EnrollmentForm()
+        if enrollment_instance:
+            # Update existing enrollment with the new form data
+            form = EnrollmentForm(request.POST, instance=enrollment_instance)
+        else:
+            # Create a new enrollment if none exists
+            form = EnrollmentForm(request.POST)
 
-    return render(request, 'enrollment_form.html', {'form': form})
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('home')  # Redirect to home page after successful enrollment
+    else:
+        # If the user is enrolled, pre-fill the form with their data
+        if enrollment_instance:
+            form = EnrollmentForm(instance=enrollment_instance)
+        else:
+            form = EnrollmentForm()
+
+    membership_plans = MembershipPlan.objects.all()
+    trainers = Trainer.objects.all()
+
+    return render(request, 'enrollment_form.html', {'form': form, 'membership_plans': membership_plans, 'trainers': trainers, 'enrollment_exists': enrollment_exists})
 
 @login_required
 def virtual_classes(request):
