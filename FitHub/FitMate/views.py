@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
 from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan
+from twilio.rest import Client
+from django.conf import settings
 from .forms import UserProfileForm, EnrollmentForm
 from django.shortcuts import get_object_or_404
 import pandas as pd
@@ -143,6 +145,12 @@ def enrollment_form(request):
         if form.is_valid():
             form.instance.user = request.user
             form.save()
+
+             # Get the phone number from the form
+            phone_number = form.cleaned_data['phone']
+            
+            # Send SMS notification
+            send_sms_notification(phone_number)
             return redirect('home')  # Redirect to home page after successful enrollment
     else:
         # If the user is enrolled, pre-fill the form with their data
@@ -155,6 +163,16 @@ def enrollment_form(request):
     trainers = Trainer.objects.all()
 
     return render(request, 'enrollment_form.html', {'form': form, 'membership_plans': membership_plans, 'trainers': trainers, 'enrollment_exists': enrollment_exists})
+
+def send_sms_notification(phone_number):
+    client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+    message = client.messages.create(
+        body="Congratulations! You have successfully enrolled in our gym.",
+        from_=settings.TWILIO_PHONE_NUMBER,
+        to=phone_number
+    )
+    return message.sid
 
 @login_required
 def virtual_classes(request):
