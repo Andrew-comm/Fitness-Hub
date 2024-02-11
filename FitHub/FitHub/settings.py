@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'FitMate',
     'chat',
     'bootstrap5',
+    'channels',
     
 ]
 
