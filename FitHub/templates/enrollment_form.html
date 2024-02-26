@@ -15,7 +15,7 @@ body {
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            display: flex;
+            /* display: flex; */
             justify-content: center;
             align-items: center;
             /* height: 100vh; */
@@ -84,10 +84,39 @@ body {
         .alert {
             margin-top: 30px;
         }
+        .navbar {
+            font-size: 18px;
+            padding: 15px 30px;
+        }
         
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">
+                <img src="{% static 'images/cover.png' %}" alt="GymGenius Logo" height="40">
+            </a>
+            <h3>Gym Enrollment</h3>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 mx-auto">
@@ -202,15 +231,15 @@ body {
             <div class="col-md-4 jumbotron-body">
                 <div class="jumbotron">
                     <h2 class="display-5">Welcome to Our Gym!</h2>
-                    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ut posuere libero, sit amet ultricies quam. Ut auctor viverra ante a sagittis.</p>
+                    <p class="lead">Discover your true potential and conquer your fitness aspirations with us. Embrace a journey of transformation and vitality as we guide you towards your goals.</p>
                     <hr class="my-4">
-                    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+                    <p>Step into a realm where dedication meets innovation, and every workout fuels your journey to greatness. Join us as we sculpt bodies and minds, one rep at a time. Welcome to a community where sweat turns into success, and every achievement is celebrated. Embrace the challenge, embrace the change – welcome to our gym.</p>
                     <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                     <img src="{% static 'images/gym.jpg' %}" alt="Gym Image">
-                    <p class="mt-3">This is a cool image description.</p>
+                    <p class="mt-3">Embrace the journey to greatness at our innovative gym. Join a community where every rep brings you closer to success.</p>
                 </div>
                 <div class="alert alert-success" role="alert">
-                    Congratulations! You have successfully enrolled in our gym.
+                    Congratulations! You've taken the first step towards a healthier lifestyle by enrolling in our gym.
                 </div>
             </div>
         </div>

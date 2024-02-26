@@ -1,0 +1,79 @@
+body{
+    background-image: url("{% static 'images/gym.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+/* Custom styles here */
+.navbar {
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+.carousel-item img {
+    height: 500px; /* Adjust height as needed */
+    width: auto;
+    object-fit: cover;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.post-header {
+    margin-bottom: 10px;
+}
+
+.post-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333; /* Dark text color */
+}
+
+.post-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #007bff; /* Blue color for title */
+}
+
+.post-content {
+    color: #555; /* Text color */
+}
+
+.post-text {
+    line-height: 1.6;
+}
+
+.post .btn-like {
+    margin-top: 10px;
+}
+
+.post .btn-comment {
+    margin-top: 10px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Add some spacing below the label */
+}
+
+textarea {
+    resize: vertical; /* Allow vertical resizing of the textarea */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Blue primary color */
+    border-color: #007bff; /* Blue border color */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker blue border on hover */
+}
+.text-color{
+    color: rgb(239, 243, 236);
+}
