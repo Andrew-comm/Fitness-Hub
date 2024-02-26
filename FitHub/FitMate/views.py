@@ -1,14 +1,15 @@
 
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
+from django.db.models import Count
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan
+from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan,Post, Session, Like
 from twilio.rest import Client
 from django.conf import settings
-from .forms import UserProfileForm, EnrollmentForm
+from .forms import UserProfileForm, EnrollmentForm, SessionForm, PostForm, CommentForm
 from django.shortcuts import get_object_or_404
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -168,7 +169,7 @@ def send_sms_notification(phone_number):
     client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
 
     message = client.messages.create(
-        body="Congratulations! You have successfully enrolled in our gym.",
+        body="Congratulations! You have successfully enrolled in  gymgenius.",
         from_=settings.TWILIO_PHONE_NUMBER,
         to=phone_number
     )
@@ -234,3 +235,66 @@ def generate_workout(request):
         return render(request, 'workout_result.html', {'workout_suggestion': suggestion})
 
     return render(request, 'workout_form.html')
+
+
+
+
+def community_feed_list(request):
+    posts = Post.objects.all().order_by('-created_at')
+    return render(request, 'community_feed.html', {'posts': posts})
+
+def community_feed_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('community_feed_list')  # Redirect to list view after success
+    else:
+        form = PostForm()
+    return render(request, 'community_feed_create.html', {'form': form})
+
+
+
+def record_session(request):
+    if request.method == 'POST':
+        form = SessionForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+            return redirect('community_feed')
+    else:
+        form = SessionForm()
+    return render(request, 'record_session.html', {'form': form})
+
+
+
+
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            return redirect('community_feed')
+    else:
+        form = CommentForm()
+    return render(request, 'add_comment.html', {'form': form, 'post': post})
+
+
+def like_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    # Check if the user has already liked the post
+    if request.method == 'POST':
+        user = request.user
+        if Like.objects.filter(post=post, user=user).exists():
+            # If the user has already liked the post, do nothing (can be used to unlike later)
+            pass
+        else:
+            # If the user has not liked the post, create a new Like instance
+            Like.objects.create(post=post, user=user)
+    return redirect('community_feed')

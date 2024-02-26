@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Enrollment, UserProfile
+from .models import CustomUser, Enrollment, UserProfile, Session, Post, Comment
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -66,3 +66,24 @@ class WorkoutSuggestionForm(forms.ModelForm):
             'medications',
             'allergies',
         ]
+
+
+
+
+class SessionForm(forms.ModelForm):
+    class Meta:
+        model = Session
+        fields = ['title', 'description', 'video']
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+
+
+class CommentForm(forms.ModelForm):
+
+    class Meta:
+        model = Comment
+        fields = ['content']

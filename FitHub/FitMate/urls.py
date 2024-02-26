@@ -16,6 +16,12 @@ urlpatterns = [
     path('suggest_workout/', views.suggest_workout, name='workout_form'),
     path('generate-workout/', views.generate_workout, name='generate_workout'),
 
+    path('community/', views.community_feed_list, name='community_feed'),
+    path('create-post', views.community_feed_create, name='create-post'),
+    path('comments/<int:post_id>/', views.add_comment, name='comments'), 
+    path('likes/<int:post_id>/', views.like_post, name='like_post'), 
+    path('record/', views.record_session, name='record_session'),
+
 
 
 ]

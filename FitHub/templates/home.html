@@ -28,7 +28,9 @@
             </li>
               <li><a href="{% url 'gallery' %}" class="nav-link px-2 link-body-emphasis">Gallery</a></li>
               <li><a href="#" class="nav-link px-2 link-body-emphasis">About</a></li>
-              <li><a href="{% url 'virtual_classes' %}" class="nav-link px-2 link-body-emphasis">Classes</a></li>
+              <li><a href="{% url 'community_feed' %}" class="nav-link px-2 link-body-emphasis">Community Feed</a></li>
+              <li><a href="{% url 'enrollment' %}" class="nav-link px-2 link-body-emphasis">Enrollment</a></li>
+
               <li><a href="{% url 'workout_form' %}" class="nav-link px-2 link-body-emphasis">Workout-Suggestion</a></li>
 
             </ul>
@@ -41,13 +43,14 @@
               <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
                 {% if user.is_authenticated %}
-                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="32" height="32" class="rounded-circle">
+                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="60" height="60" class="rounded-circle">
                 {% endif %}
               </a>
               <ul class="dropdown-menu text-small">
                 <li><a class="dropdown-item" href="{% url 'workout_form' %}">New project</a></li>
+                <li><a class="dropdown-item" href="{% url 'virtual_classes' %}">Classes</a></li>
                 <li><a class="dropdown-item" href="{% url 'generate_workout' %}">New project</a></li>
-                <li><a class="dropdown-item" href="{% url 'enrollment' %}">Settings</a></li>
+                
                 {% if user.is_authenticated %}
                 <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                 {% else %}

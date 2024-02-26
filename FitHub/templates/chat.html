@@ -11,23 +11,27 @@
 
     <script>
         var chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/'
-        );
-    
-        chatSocket.onmessage = function(e) {
-            var data = JSON.parse(e.data);
-            var message = data['message'];
-            document.querySelector('#chat-log').innerHTML += (message + '<br>');
-        };
-    
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            var messageInputDom = document.querySelector('#chat-message-input');
-            var message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
-                'message': message
-            }));
-            messageInputDom.value = '';
-        };
+    'ws://' + window.location.host + '/ws/chat/'
+);
+
+chatSocket.onmessage = function(e) {
+    var data = JSON.parse(e.data);
+    var message = data['message'];
+    var sender = data['sender_email']; // Update to access sender's email
+    var timestamp = data['timestamp']; // This line is not included in the event data
+
+    // Display the message along with the sender's email
+    document.querySelector('#chat-log').innerHTML += `<p><strong>${sender}</strong>: ${message} (${timestamp})</p>`;
+};
+
+document.querySelector('#chat-message-submit').onclick = function(e) {
+    var messageInputDom = document.querySelector('#chat-message-input');
+    var message = messageInputDom.value;
+    chatSocket.send(JSON.stringify({
+        'message': message
+    }));
+    messageInputDom.value = '';
+};
     </script>
 </body>
 </html>
