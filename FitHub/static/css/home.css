@@ -1,16 +1,60 @@
-/* Update the CSS to overlay the content on the image */
-/* Remove the unnecessary CSS variables and button styles */
-/* Keep the default Bootstrap button styles */
 
-/* Corrected CSS for the hero image and overlay */
+
+header {
+  background-color: #f8f9fa; /* Light grey background */
+  padding: 1rem 0; /* Add padding */
+}
+
+/* Navbar Styling */
+.nav-link {
+  color: #333; /* Dark text color for navbar links */
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Search Bar */
+.form-control {
+  border-color: #ced4da; /* Light grey border color */
+  border-radius: 0.25rem; /* Add border radius */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  background-color: #fff; /* White background for dropdown menu */
+  border: none; /* Remove border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.dropdown-item {
+  color: #333; /* Dark text color for dropdown items */
+  padding: 0.5rem 1rem;
+}
+
+.dropdown-divider {
+  border-color: #ccc; /* Light grey border color for dropdown divider */
+}
+
+/* Profile Picture */
+.rounded-circle {
+  border-radius: 50%; /* Round the profile picture */
+  border: 2px solid #fff; /* Add border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
 .hero {
   position: relative;
 }
 
+
+
 .hero-image-container {
   position: relative;
   width: 100%;
-  height: 100vh; /* Set the height as needed to cover the entire viewport */
+  height: 100vh; 
   overflow: hidden;
 }
 
@@ -77,8 +121,10 @@
   opacity: 0.8;
 }
 
-
-
+.card-img img {
+  width: 200px; /* Adjust width as needed */
+  height: 150px; /* Adjust height as needed */
+}
 
 /* Card container styling */
 .register-card {

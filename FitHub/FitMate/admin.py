@@ -1,7 +1,6 @@
 from django.contrib import admin
-from.models import CustomUser,UserProfile, Gallery, Enrollment, Trainer, MembershipPlan, VirtualFitnessClass, Post, Session
+from.models import CustomUser,UserProfile, Gallery, Enrollment, Trainer, MembershipPlan, VirtualFitnessClass, Post, Session, Like, Comment
 
-# Register your models here.
 admin.site.register(CustomUser)
 admin.site.register(UserProfile)
 admin.site.register(Gallery)
@@ -11,4 +10,7 @@ admin.site.register(MembershipPlan)
 admin.site.register(VirtualFitnessClass)
 admin.site.register(Post)
 admin.site.register(Session)
+admin.site.register(Like)
+admin.site.register(Comment)
+
 

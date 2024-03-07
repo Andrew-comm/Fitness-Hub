@@ -9,61 +9,65 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     {% load bootstrap5 %}
     {% bootstrap_css %}
-    {% bootstrap_javascript %}
+    {% bootstrap_javascript %} 
+
+    
 </head>
-<body>
+<body>  
 
-    <header class="p-3 mb-3 border-bottom">
-        <div class="container">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-              <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
             </a>
-    
+
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li>
-                <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">
-                    <img src="{% static 'images/cover.png' %}" alt="GymGenius Logo" height="40">
-                </a>
-            </li>
-              <li><a href="{% url 'gallery' %}" class="nav-link px-2 link-body-emphasis">Gallery</a></li>
-              <li><a href="#" class="nav-link px-2 link-body-emphasis">About</a></li>
-              <li><a href="{% url 'community_feed' %}" class="nav-link px-2 link-body-emphasis">Community Feed</a></li>
-              <li><a href="{% url 'enrollment' %}" class="nav-link px-2 link-body-emphasis">Enrollment</a></li>
-
-              <li><a href="{% url 'workout_form' %}" class="nav-link px-2 link-body-emphasis">Workout-Suggestion</a></li>
-
+                <li>
+                    <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">
+                        <img src="{% static 'images/cover.png' %}" alt="GymGenius Logo" height="40">
+                    </a>
+                </li>              
+                <li><a href="#" class="nav-link px-2 link-body-emphasis">About</a></li>
+                <li><a href="{% url 'community_feed' %}" class="nav-link px-2 link-body-emphasis">Community Feed</a></li>
+                <li><a href="{% url 'enrollment' %}" class="nav-link px-2 link-body-emphasis">Enrollment</a></li>
+                <li><a href="{% url 'workout_form' %}" class="nav-link px-2 link-body-emphasis">Workout-Suggestion</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link px-2 link-body-emphasis">Dashboard</a></li>
             </ul>
-    
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-              <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </form>
-    
-            <div class="dropdown text-end">
-              <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
 
-                {% if user.is_authenticated %}
-                <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="60" height="60" class="rounded-circle">
-                {% endif %}
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="{% url 'workout_form' %}">New project</a></li>
-                <li><a class="dropdown-item" href="{% url 'virtual_classes' %}">Classes</a></li>
-                <li><a class="dropdown-item" href="{% url 'generate_workout' %}">New project</a></li>
-                
-                {% if user.is_authenticated %}
-                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
-                {% else %}
-                <li><a class="dropdown-item" href="{url 'create-profile'}">Create profile</a></li>
-                {% endif %}
-                
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
-              </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if user.is_authenticated %}
+                        {% if profile.profile_picture %}
+                            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" width="60" height="60" class="rounded-circle">
+                        {% else %}
+                            <!-- Display a default placeholder image -->
+                            <img src="{% static 'images/gym.jpg' %}" alt="Default Profile Picture" width="60" height="60" class="rounded-circle">
+                        {% endif %}
+                    {% else %}
+                        <p>Profile</p>
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small">
+                    <li><a class="dropdown-item" href="{% url 'virtual_classes' %}">Classes</a></li>
+                    <li><a class="dropdown-item" href="{% url 'log-progress' %}">Progress Log</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{url 'create-profile'}">Create profile</a></li>
+                    {% endif %}
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Sign out</a></li>
+                </ul>
             </div>
-          </div>
         </div>
-      </header>    
+    </div>
+</header>
+
 
 
       <section id="hero" class="hero">
@@ -93,9 +97,37 @@
         </div>
         
     </section>
+
+    <section id="service" class="services pt-0 bg-dark">
+      <div class="container" data-aos="fade-up">
+          <div class="section-header text-center">
+              <h2 class="text-white">GymGenius Gallery</h2>
+          </div>
+  
+          <div class="row gy-4">
+              {% for item in gallery %}
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                  <div class="card">
+                      <div class="card-img">
+                          <img src="{{ item.gallery_pic.url }}" alt="{{ item.name }}" class="img-fluid">
+                      </div>
+                      <div class="card-body">
+                          <h3 class="card-title">{{ item.name }}</h3>
+                          <p class="card-text  mt-5">{{ item.description }}</p>
+                      </div>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </section>
+  
+
     <div>
+    
      
     </div>
+    
  
 </body>
 </html>
