@@ -1,0 +1,324 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+         
+        /* Custom styles here */
+        .navbar {
+            font-size: 18px;
+            padding: 15px 30px;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Style for visualizations */
+        .visualization {
+            margin-top: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            width: calc(50% - 20px); /* Adjusted width to account for spacing */
+            box-sizing: border-box; /* Include padding and border in the width calculation */
+            float: left; /* Float the visualizations to make them align horizontally */
+            margin-right: 10px; /* Add spacing between visualizations */
+            margin-left: 10px;
+           
+            background-color: #c0bcbc;
+        }
+         h2{
+           text-align: center;
+        }
+
+        canvas {
+            width: 100%; /* Allow canvas to fill the visualization container */
+            height: auto;
+        }
+        #progress-table{
+            margin-right: 20px; /* Add spacing between visualizations */
+            margin-left: 10px;
+
+        }
+
+        @media only screen and (max-width: 768px) {
+            /* Adjustments for smaller screens */
+            .visualization {
+                width: 100%; /* Make visualizations full width on smaller screens */
+                float: none; /* Remove float for stacking on smaller screens */
+                margin-right: 0; /* Remove spacing on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a href="{% url 'home' %}" class="nav-link px-2 link-secondary">
+                <img src="{% static 'images/cover.png' %}" alt="GymGenius Logo" height="40">
+            </a>
+            <h3>Perfomance Dashboard</h3>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <h2>{{user.names}}Progress Data</h2>
+    <table id="progress-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Duration (Minutes)</th>
+                <th>Calories Burned (kcal)</th>
+                <th>Weight (kg)</th>
+                <th>Height (cm)</th>
+                <th>Reps</th>
+                <th>Distance (km)</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in progress_data %}
+            <tr>
+                <td>{{ data.date }}</td>
+                <td>{{ data.duration_minutes }}</td>
+                <td>{{ data.calories_burned }}</td>
+                <td>{{ data.weight_kg }}</td>
+                <td>{{ data.height_cm }}</td>
+                <td>{{ data.reps }}</td>
+                <td>{{ data.distance }}</td>
+                <td>{{ data.notes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Line Chart for Weight Trend Over Time -->
+    <div class="visualization">
+        <h2>Weight Trend Over Time</h2>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- Pie Chart for Reps Distribution -->
+    <div class="visualization">
+        <h2>Reps Distribution</h2>
+        <canvas id="repsChart"></canvas>
+    </div>
+
+    <!-- Stacked Bar Chart for Calories Burned -->
+    <div class="visualization">
+        <h2>Calories Burned</h2>
+        <canvas id="caloriesByActivityChart"></canvas>
+    </div>
+
+    <!-- Bubble Chart for Duration vs. Calories Burned -->
+    <div class="visualization">
+        <h2>Duration vs. Calories Burned</h2>
+        <canvas id="bubbleChart"></canvas>
+    </div>
+    
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
+    <script>
+        // JavaScript code to generate the visualizations
+        // Make sure to fetch the data from the server-side and format it appropriately for each chart
+
+        // Example:
+        // Pie Chart for Reps Distribution
+        var repsData = [10, 15, 20]; // Sample reps data
+        var repsLabels = ['Low', 'Medium', 'High']; // Sample labels
+        var repsChartCanvas = document.getElementById('repsChart').getContext('2d');
+        var repsChart = new Chart(repsChartCanvas, {
+            type: 'pie',
+            data: {
+                labels: repsLabels,
+                datasets: [{
+                    label: 'Reps Distribution',
+                    data: repsData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(75, 192, 192, 0.7)'
+                    ]
+                }]
+            },
+            options: {
+                // Add your chart options here
+            }
+        });
+
+        var table = document.getElementById('progress-table');
+        var rows = table.getElementsByTagName('tr');  // Get all rows
+        var dates = [], durations = [], calories = [], weights = [];
+
+        // Extract data from each table row, skipping the header row (index 0)
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');  // Get cells in current row
+            dates.push(cells[0].textContent);  // Access date data
+            durations.push(parseInt(cells[1].textContent));  // Convert duration to integer
+            calories.push(parseInt(cells[2].textContent));  // Convert calories to integer
+            weights.push(parseFloat(cells[3].textContent));  // Convert weight to decimal
+        }
+
+        // Create a line chart to visualize weight over time
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Weight (kg)',
+                    data: weights,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Weight (kg)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+
+        var table = document.getElementById('progress-table');
+        var rows = table.getElementsByTagName('tr');
+        var dates = [], caloriesBurned = [];
+
+        // Extract data from each table row, skipping the header row (index 0)
+        for (var i = 1; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            dates.push(cells[0].textContent); // Get date
+            caloriesBurned.push(parseInt(cells[2].textContent)); // Get calories burned
+        }
+
+        // Create the stacked bar chart
+        var ctx = document.getElementById('caloriesByActivityChart').getContext('2d');
+        var caloriesByActivityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Calories Burned',
+                    data: caloriesBurned,
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)', // Blue color for bars
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Calories Burned'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    }
+                }
+            }
+        });
+
+        var durations = [];
+    var caloriesBurned = [];
+    var weights = [];
+
+    // Populate durations, caloriesBurned, and weights arrays from the table data
+
+    var bubbleData = durations.map((duration, index) => ({
+        x: duration,
+        y: caloriesBurned[index],
+        r: weights[index] * 2 // Adjust the scale for bubble size
+    }));
+
+    var bubbleCanvas = document.getElementById('bubbleChart').getContext('2d');
+    var bubbleChart = new Chart(bubbleCanvas, {
+        type: 'bubble',
+        data: {
+            datasets: [{
+                label: 'Duration vs. Calories Burned',
+                data: bubbleData,
+                backgroundColor: 'rgba(255, 99, 132, 0.7)', // Customize bubble color
+                borderColor: 'rgba(255, 99, 132, 1)',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Calories Burned'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Duration (Minutes)'
+                    }
+                }
+            }
+        }
+    });
+
+
+    
+
+         
+
+        // Similar JavaScript code can be written for other visualizations
+    </script>
+    
+    
+</body>
+</html>

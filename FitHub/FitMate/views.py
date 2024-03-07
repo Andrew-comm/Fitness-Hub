@@ -2,14 +2,15 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.db.models import Count
+import json
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan,Post, Session, Like
+from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan,Post, Session, Like, ProgressData
 from twilio.rest import Client
 from django.conf import settings
-from .forms import UserProfileForm, EnrollmentForm, SessionForm, PostForm, CommentForm
+from .forms import UserProfileForm, EnrollmentForm, SessionForm, PostForm, CommentForm, ProgressForm
 from django.shortcuts import get_object_or_404
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -26,8 +27,11 @@ def home(request):
         profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         profile = None
-    
-    return render(request, 'home.html', {'profile': profile})
+
+    # Fetch gallery objects
+    gallery = Gallery.objects.all()
+
+    return render(request, 'home.html', {'profile': profile, 'gallery': gallery})
 
 #view profile
 @login_required
@@ -116,17 +120,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)  # This logs out the user
     return redirect('home')  
-
-
-
-
-
-def Gallery_view(request):
-    gallery = Gallery.objects.all()
-
-    context = {'gallery':gallery}
-    return render(request, 'gallery.html', context)
-
 
 
 @login_required
@@ -298,3 +291,39 @@ def like_post(request, post_id):
             # If the user has not liked the post, create a new Like instance
             Like.objects.create(post=post, user=user)
     return redirect('community_feed')
+
+
+@login_required
+def log_progress(request):
+    if request.method == 'POST':
+        form = ProgressForm(request.POST)
+        if form.is_valid():
+            progress_data = form.save(commit=False)
+            progress_data.user = request.user  # Assign the logged-in user to the ProgressData instance
+            progress_data.save()  # Save the ProgressData object
+            return redirect('dashboard')
+    else:
+        form = ProgressForm()
+    return render(request, 'log_progress.html', {'form': form})
+
+
+
+
+def dashboard(request):
+    user = request.user
+    progress_data = ProgressData.objects.filter(user=user).order_by('date')
+
+    # Convert dates to strings for JSON serialization (avoid potential date format issues)
+    weight_labels = [data.date.strftime('%Y-%m-%d') for data in progress_data]
+    weight_data = [data.weight_kg for data in progress_data]
+    calories_labels = [data.date.strftime('%Y-%m-%d') for data in progress_data]
+    calories_data = [data.calories_burned for data in progress_data]
+
+    context = {
+        'progress_data': progress_data,
+        'weight_labels': weight_labels,  # Added
+        'weight_data': weight_data,  # Added
+        'calories_labels': calories_labels,  # Added
+        'calories_data': calories_data,  # Added
+    }
+    return render(request, 'dashboard.html', context)

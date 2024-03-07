@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomUser, Enrollment, UserProfile, Session, Post, Comment
+from .models import CustomUser, Enrollment, UserProfile, Session, Post, Comment,ProgressData
 
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -87,3 +87,18 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
+
+
+
+
+class ProgressForm(forms.ModelForm):
+    type = forms.ChoiceField(choices=[("workout", "Workout"), ("body_measurement", "Body Measurement")], widget=forms.RadioSelect)
+    
+    # Define widgets for specific fields
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
+    calories_burned = forms.FloatField(label='Calories Burned (kcal)')
+    distance = forms.DecimalField(label='Distance Covered (km)', max_digits=8, decimal_places=2, required=False)
+
+    class Meta:
+        model = ProgressData
+        fields = ['date', 'duration_minutes', 'calories_burned', 'weight_kg', 'height_cm', 'reps', 'distance']

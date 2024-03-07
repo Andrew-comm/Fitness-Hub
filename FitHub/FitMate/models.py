@@ -189,3 +189,18 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user.username} likes {self.post.title}"
+    
+
+class ProgressData(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateField()    
+    duration_minutes = models.IntegerField(blank=True, null=True)
+    calories_burned  = models.FloatField(blank=True, null=True)
+    weight_kg = models.FloatField(blank=True, null=True)
+    height_cm = models.FloatField(blank=True, null=True)
+    reps = models.IntegerField(blank=True, null=True)
+    distance = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    
+
+    def __str__(self):
+        return f"{self.user.username} - {self.get_type_display()} on {self.date}"

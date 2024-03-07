@@ -10,7 +10,7 @@ urlpatterns = [
     path('update-profile/', views.update_profile, name='update_profile'),
     path('profile/delete/<int:pk>/', views.delete_profile, name='delete_profile'),   
     path('', views.home, name='home'),
-    path('gallery/', views.Gallery_view, name='gallery'),
+    
     path('enrollment/', views.enrollment_form, name='enrollment'),
     path('virtual-classes/', views.virtual_classes, name='virtual_classes'),
     path('suggest_workout/', views.suggest_workout, name='workout_form'),
@@ -21,6 +21,10 @@ urlpatterns = [
     path('comments/<int:post_id>/', views.add_comment, name='comments'), 
     path('likes/<int:post_id>/', views.like_post, name='like_post'), 
     path('record/', views.record_session, name='record_session'),
+
+    
+    path('log-progress/', views.log_progress, name='log-progress'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 
 
 
