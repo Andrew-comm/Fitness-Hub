@@ -33,6 +33,7 @@
                 <li><a href="{% url 'enrollment' %}" class="nav-link px-2 link-body-emphasis">Enrollment</a></li>
                 <li><a href="{% url 'workout_form' %}" class="nav-link px-2 link-body-emphasis">Workout-Suggestion</a></li>
                 <li><a href="{% url 'dashboard' %}" class="nav-link px-2 link-body-emphasis">Dashboard</a></li>
+                
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -55,6 +56,7 @@
                 <ul class="dropdown-menu text-small">
                     <li><a class="dropdown-item" href="{% url 'virtual_classes' %}">Classes</a></li>
                     <li><a class="dropdown-item" href="{% url 'log-progress' %}">Progress Log</a></li>
+                    <li><a class="dropdown-item" href="{% url 'awards' %}">Awards</a></li>
                     {% if user.is_authenticated %}
                         <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                     {% else %}
@@ -98,29 +100,26 @@
         
     </section>
 
-    <section id="service" class="services pt-0 bg-dark">
-      <div class="container" data-aos="fade-up">
-          <div class="section-header text-center">
-              <h2 class="text-white">GymGenius Gallery</h2>
-          </div>
-  
-          <div class="row gy-4">
-              {% for item in gallery %}
-              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                  <div class="card">
-                      <div class="card-img">
-                          <img src="{{ item.gallery_pic.url }}" alt="{{ item.name }}" class="img-fluid">
-                      </div>
-                      <div class="card-body">
-                          <h3 class="card-title">{{ item.name }}</h3>
-                          <p class="card-text  mt-5">{{ item.description }}</p>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %}
-          </div>
-      </div>
-  </section>
+    <div class="row gy-4 bg-dark"> <!-- Adjust gy-4 to control the vertical spacing between the cards -->
+
+        <h2 class="text-white text-center">GymGenius Gallery</h2>
+        {% for item in gallery %}
+        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+            <div class="card service-card">
+                <div class="card-img">
+                    <img src="{{ item.gallery_pic.url }}" alt="{{ item.name }}" class="img-fluid ml-2 my-4"> <!-- Adjust ml-2 and my-4 for spacing -->
+                </div>
+                <div class="card-body service-body">
+                    <h3 class="card-title mt-0">{{ item.name }}</h3>
+                    <p class="card-text mt-5">{{ item.description }}</p> <!-- Adjust mt-3 to control the spacing between title and description -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    
+    
   
 
     <div>

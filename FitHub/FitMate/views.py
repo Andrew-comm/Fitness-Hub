@@ -1,13 +1,14 @@
 
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
-from django.db.models import Count
+from django.db.models import Count, Case, When, IntegerField,Sum, CharField, Value
+
 import json
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from FitMate.forms import CustomUserCreationForm
-from .models import UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan,Post, Session, Like, ProgressData
+from .models import CustomUser, UserProfile, Gallery, Enrollment, VirtualFitnessClass,Trainer, MembershipPlan,Post, Session, Like, ProgressData, AwardLevel
 from twilio.rest import Client
 from django.conf import settings
 from .forms import UserProfileForm, EnrollmentForm, SessionForm, PostForm, CommentForm, ProgressForm
@@ -295,20 +296,31 @@ def like_post(request, post_id):
 
 @login_required
 def log_progress(request):
+    try:
+        user_profile = request.user.userprofile
+    except UserProfile.DoesNotExist:
+        # If the UserProfile does not exist, create it
+        user_profile = UserProfile.objects.create(user=request.user)
+
     if request.method == 'POST':
         form = ProgressForm(request.POST)
         if form.is_valid():
             progress_data = form.save(commit=False)
             progress_data.user = request.user  # Assign the logged-in user to the ProgressData instance
             progress_data.save()  # Save the ProgressData object
-            return redirect('dashboard')
+            
+            # Award points to the user for logging progress
+            user_profile.points += 10  # Award 10 points for each row logged
+            user_profile.save()
+
+            return redirect('dashboard')  # Redirect to a success page after logging progress
     else:
         form = ProgressForm()
+    
     return render(request, 'log_progress.html', {'form': form})
 
 
-
-
+@login_required
 def dashboard(request):
     user = request.user
     progress_data = ProgressData.objects.filter(user=user).order_by('date')
@@ -327,3 +339,48 @@ def dashboard(request):
         'calories_data': calories_data,  # Added
     }
     return render(request, 'dashboard.html', context)
+
+
+
+
+@login_required
+def awards_page(request):
+    # Fetch all award levels from the database
+    award_levels = AwardLevel.objects.all()
+
+    # Create a list of dictionaries for award levels to use in the view
+    award_levels_data = [
+        {"name": level.name, "min_points": level.min_points}
+        for level in award_levels
+    ]
+
+    # Annotate users with their total points and assign award levels
+    users = CustomUser.objects.annotate(
+        total_points=Sum('userprofile__points')
+    ).annotate(
+        award_level=Case(
+            *[When(total_points__gte=level['min_points'], then=Value(level['name'])) for level in award_levels_data],
+            default=Value("No Award"), output_field=CharField()
+        )
+    ).order_by('-total_points')
+
+    context = {'users': users}
+    return render(request, 'awards_page.html', context)
+
+
+
+def award_details(request, award_level):   
+    
+    # Retrieve award details based on the award level
+    try:
+        award_level_obj = AwardLevel.objects.get(name=award_level)
+    except AwardLevel.DoesNotExist:
+        return render(request, 'award_not_found.html')
+
+    context = {'award_level': award_level_obj}
+    return render(request, 'award_details.html', context)
+
+
+def award_list(request):
+    awards = AwardLevel.objects.all()
+    return render(request, 'award_list.html', {'awards': awards})

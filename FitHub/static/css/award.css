@@ -1,0 +1,56 @@
+body {
+    background-color: #f5f5f5; /* Light gray background */
+    font-family: sans-serif;
+  }
+
+  .container {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Box shadow for the container */
+    border-radius: 5px; /* Add a slight border radius to the container */
+    padding: 20px; /* Add some padding inside the container */
+    margin-top: 30px; /* Add some margin from the top */
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #343a40; /* Adjust text color as needed */
+    font-size: 2em; /* Increase font size for a more prominent header */
+  }
+
+  .card {
+    border-radius: 10px; /* Rounded corners for the card */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    max-width: 500px; /* Set a maximum width for the card */
+  }
+
+  .card-img-top {
+    /* No need for border-radius styling here */
+    max-width: 500px; /* Set a maximum width for the image */
+    max-height: 500px; /* Set a maximum height for the image */
+    object-fit: cover; /* Maintain aspect ratio and cover available space */
+  }
+
+  .card-body {
+    padding: 20px; /* Adjust padding as needed */
+  }
+
+  .card-title {
+    color: #343a40; /* Adjust text color as needed */
+  }
+
+  .card-text {
+    color: #777; /* Adjust text color for description */
+  }
+  .btn-back {
+          background-color: #17a2b8;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          text-decoration: none;
+          transition: background-color 0.3s;
+      }
+
+      .btn-back:hover {
+          background-color: #138496;
+      }

@@ -1,0 +1,60 @@
+ /* Custom styles here */
+ .navbar {
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+body {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+th {
+    background-color: #f2f2f2;
+}
+
+/* Style for visualizations */
+.visualization {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: calc(50% - 20px); /* Adjusted width to account for spacing */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    float: left; /* Float the visualizations to make them align horizontally */
+    margin-right: 10px; /* Add spacing between visualizations */
+    margin-left: 10px;
+   
+    background-color: #c0bcbc;
+}
+ h2{
+   text-align: center;
+}
+
+canvas {
+    width: 100%; /* Allow canvas to fill the visualization container */
+    height: auto;
+}
+#progress-table{
+    margin-right: 20px; /* Add spacing between visualizations */
+    margin-left: 10px;
+
+}
+
+@media only screen and (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .visualization {
+        width: 100%; /* Make visualizations full width on smaller screens */
+        float: none; /* Remove float for stacking on smaller screens */
+        margin-right: 0; /* Remove spacing on smaller screens */
+    }
+}

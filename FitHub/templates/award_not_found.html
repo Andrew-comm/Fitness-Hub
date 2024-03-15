@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Award Details</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="{% static 'css/award.css' %}">
+  
+
+  
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %} 
+
+  
+</head>
+
+<body>
+  {% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <h2>Welcome to our Awards Page!</h2>
+        <p>We're glad to have you here. Unfortunately, the award level you're looking for is not found. But don't worry, you're still making great progress!</p>
+        <h3>Here's a simple award to encourage you:</h3>
+        <div class="card mb-3">
+          <img src="https://img.freepik.com/free-vector/white-blue-badge-design_1095-48.jpg?t=st=1710537725~exp=1710541325~hmac=dc92af5c1c6e90896ef2ffa26865912d73e1ed23cbbff3e0c6be2a8f3f2d5bb6&w=740" class="card-img-top" alt="{{ default_award.name }} Image">
+          <div class="card-body">
+            <h5 class="card-title">Simple Achievement</h5>
+            <p class="card-text">You're making great progress!</p>
+          </div>
+          <a href="{% url 'awards-list' %}" class="btn btn-back">Check Awards</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

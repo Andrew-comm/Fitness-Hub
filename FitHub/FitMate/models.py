@@ -84,6 +84,7 @@ class UserProfile(models.Model):
     medical_conditions = models.TextField(blank=True)
     medications = models.TextField(blank=True)
     allergies = models.BooleanField(default=False)
+    points = models.IntegerField(default=0) 
     
 
 
@@ -204,3 +205,27 @@ class ProgressData(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.get_type_display()} on {self.date}"
+    
+
+
+
+
+
+class AwardLevel(models.Model):
+    name = models.CharField(max_length=50)
+    min_points = models.IntegerField(default=0)
+    description = models.TextField()
+    image = models.ImageField(upload_to='award_images/')
+
+    def __str__(self):
+        return self.name
+
+
+class Award(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    award_level = models.ForeignKey(AwardLevel, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Award for {self.user.email} - Level: {self.award_level.name}"
+

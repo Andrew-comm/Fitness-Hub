@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award List</title>
+    <link rel="stylesheet" href="{% static 'css/award-list.css' %}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+   
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5 mb-4 text-center">Award List</h2>
+        <div class="row">
+            {% for award in awards %}
+            <div class="col-md-4">
+                <div class="card award-card">
+                    <img src="{{ award.image.url }}" class="card-img-top" alt="{{ award.name }} Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ award.name }}</h5>
+                        <p class="card-text">{{ award.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award Details</title>
+    <link rel="stylesheet" href="{% static 'css/award_details.css' %}">
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <style>
+        
+    </style>
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <img src="{{ award_level.image.url }}" class="card-img-top" alt="{{ award_level.name }} Image">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ award_level.name }} Details</h2>
+                        <p class="card-text">{{ award_level.description }}</p>
+                        <a href="{% url 'awards-list' %}" class="btn btn-back">Back to Awards</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

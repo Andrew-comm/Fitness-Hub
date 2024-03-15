@@ -1,0 +1,63 @@
+body{
+    background-image: url("{% static 'images/gym.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+/* Style progress bar */
+.progress {          
+    margin-bottom: 10px;
+}
+
+/* Style tooltips */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Styles for form and image layout */
+.form-and-image {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap if needed */
+}
+
+.form-container {
+    background-color: #fff;
+    flex: 1; /* Take up half the available space */
+    padding: 1rem; /* Add some padding */
+    border: 1px solid #ced4da; /* Add a light border */
+    border-radius: .25rem; /* Add rounded corners */
+}
+
+card-gym {
+    flex: 1; /* Take up half the available space */
+    padding: 1rem; /* Add some padding */
+    text-align: center; /* Center the text within the image container */
+}
+
+/* Additional styling for form fields */
+.form-group label {
+    font-weight: bold;
+}

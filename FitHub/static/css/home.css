@@ -131,8 +131,10 @@ header {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
+  margin-bottom: 30px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -220,4 +222,35 @@ button:hover {
   position: fixed;
   
   left: 0;
+}
+
+.service-card {
+  background-color: #fff; /* Set background color for card */
+  border-radius: 10px; /* Add border-radius for rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  transition: transform 0.3s ease; /* Add smooth transition effect */
+}
+
+.service-card:hover {
+  transform: translateY(-5px); /* Add slight hover effect */
+}
+
+.service-body {
+  padding: 20px; /* Add padding to the card body */
+}
+
+.card-title {
+  font-size: 24px; /* Customize font size for title */
+  color: #333; /* Customize color for title */
+}
+
+.card-text {
+  font-size: 16px; /* Customize font size for description */
+  color: #666; /* Customize color for description */
+}
+
+@media (max-width: 767px) {
+  .gy-4 > .col-lg-4 {
+      margin-bottom: 30px; /* Adjust spacing for smaller screens */
+  }
 }
