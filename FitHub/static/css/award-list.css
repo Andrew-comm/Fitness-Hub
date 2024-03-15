@@ -1,0 +1,20 @@
+body {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+.award-card {
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+.award-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+.award-card img {
+    max-width: 100%;
+    height: auto;
+}
+.award-card .card-body {
+    padding: 20px;
+}

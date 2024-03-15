@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Award Details</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="{% static 'css/award_page.css' %}">
+    
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %} 
+
+</head>
+
+<style>
+    
+</style>
+
+<body>
+    <div class="award-container">
+        <h2>Awards Page</h2>
+        <div class="table-responsive">
+            <table class="award-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>Points</th>
+                        <th>Award Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.userprofile.points }}</td>
+                            <td>
+                                <a href="{% url 'award_details' user.award_level %}" class="btn btn-info award-level-link">{{ user.award_level }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

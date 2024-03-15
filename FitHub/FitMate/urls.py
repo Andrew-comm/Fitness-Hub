@@ -25,7 +25,12 @@ urlpatterns = [
     
     path('log-progress/', views.log_progress, name='log-progress'),
     path('dashboard/', views.dashboard, name='dashboard'),
-
-
-
+    path('awards/', views.awards_page, name='awards'),
+    path('award-details/<str:award_level>/', views.award_details, name='award_details'),
+    path('awards-list/', views.award_list, name='awards-list'),
 ]
+
+
+
+
+
